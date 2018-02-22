@@ -1,0 +1,41 @@
+\begin{thebibliography}{6}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{{\tt #1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+
+\bibitem[{Banbura et~al.(2011)Banbura, Giannone, \& Reichlin}]{banburaetal2011}
+Banbura, M., Giannone, D., \& Reichlin, L. (2011).
+\newblock Nowcasting.
+\newblock {\em Oxford Handbook on Economic Forecasting\/}.
+
+\bibitem[{Ba{\'n}bura \& R{\"u}nstler(2011)}]{banburarunstler2011}
+Ba{\'n}bura, M., \& R{\"u}nstler, G. (2011).
+\newblock A look into the factor model black box: publication lags and the role
+  of hard and soft data in forecasting gdp.
+\newblock {\em International Journal of Forecasting\/}, {\em 27\/}(2),
+  333--346.
+
+\bibitem[{Giannone et~al.(2008)Giannone, Reichlin, \& Small}]{giannoneetal2008}
+Giannone, D., Reichlin, L., \& Small, D. (2008).
+\newblock Nowcasting: The real-time informational content of macroeconomic
+  data.
+\newblock {\em Journal of Monetary Economics\/}, {\em 55\/}(4), 665--676.
+
+\bibitem[{Mariano \& Murasawa(2003)}]{marianomurasawa2003}
+Mariano, R.~S., \& Murasawa, Y. (2003).
+\newblock A new coincident index of business cycles based on monthly and
+  quarterly series.
+\newblock {\em Journal of applied Econometrics\/}, {\em 18\/}(4), 427--443.
+
+\bibitem[{Stock \& Watson(2011)}]{stockwatson2011}
+Stock, J.~H., \& Watson, M. (2011).
+\newblock Dynamic factor models.
+\newblock {\em Oxford Handbook on Economic Forecasting\/}.
+
+\bibitem[{Stock \& Watson(2006)}]{stockwatson2006}
+Stock, J.~H., \& Watson, M.~W. (2006).
+\newblock Forecasting with many predictors.
+\newblock {\em Handbook of economic forecasting\/}, {\em 1\/}, 515--554.
+
+\end{thebibliography}
