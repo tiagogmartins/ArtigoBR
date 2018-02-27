@@ -24,7 +24,20 @@ nowpast <- function(datas, base, trans, delay, aggregate, method, p = 1, q = 1, 
     X <- base0[[i]][,-brgdp_position]
     
     # painel balanceado
-    XB <- Bpanel(X[,1:60], trans = trans, aggregate = aggregate)
+   if (method == "EM"){
+     stationaryBase <- cbind(X[,trans == 0], X[,trans == 1]/lag(X[,trans == 1], k = -1) - 1, diff(X[,trans == 2]),
+                             (X[,trans == 3]/lag(X[,trans == 3], k = -12) - 1) - (lag(X[,trans == 3],-1)/lag(X[,trans == 3], k = -13) - 1),
+                             diff(X[,trans == 4],12) - diff(lag(X,-1)[,trans == 4],12)
+     )
+     colnames(stationaryBase) <- colnames(X)[c(which(trans == 0),which(trans == 1),which(trans == 2),which(trans == 3),which(trans == 4)) ]
+     XB <- stationaryBase[,colnames(X)]
+     
+   } else {
+     XB <- Bpanel(X, trans = trans, aggregate = aggregate) 
+     
+   }
+    
+    
     
     # modelagem PIB
     now <- nowcast(y = brgdpEst, x = XB, q = q, r = r, p = p, method = method)

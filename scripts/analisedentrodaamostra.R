@@ -7,7 +7,7 @@ library(nowcasting)
 library(forecast)
 library(seasonal)
 library(zoo)
-source('C:/Users/daiane.mattos/Dropbox/Github/ArtigoBR/scripts/nowpast.R', encoding = 'UTF-8')
+source('nowpast.R', encoding = 'UTF-8')
 
 # base
 base <- ts(read_excel("base2000.xlsx")[,-1], start = c(2000,1), freq = 12)
@@ -111,36 +111,4 @@ colMeans(nowpast.error(out = nowpast13, y = pib, yAS = pibAS))
 colMeans(nowpast.error(out = nowpast14, y = pib, yAS = pibAS))
 colMeans(nowpast.error(out = nowpast15, y = pib, yAS = pibAS))
 colMeans(nowpast.error(out = nowpast16, y = pib, yAS = pibAS))
-
-
-
-View(varQ)
-View(varA)
-View(acum4)
-View(nivel)
-
-
-
-
-
-na.omit(data.frame(varA0[4,]))
-
-"2016 Q3"
-
-View(base0[[which(datas == as.Date("2016-06-03"))]])
-View(base0[[which(datas == as.Date("2016-06-10"))]])
-
-tail(base0[[which(datas == as.Date("2016-06-03"))]][,51:60])
-tail(base0[[which(datas == as.Date("2016-06-10"))]][,51:60])
-
-barplot(nivel[6,], ylim = c(100,200))
-
-rmseNivel <- abs(nivel - pib)
-
-for(i in 1:8){
-  barplot(c(rmseNivel[i,]))
-  Sys.sleep(1)
-}
-
-abline(h = 161.72)
 
