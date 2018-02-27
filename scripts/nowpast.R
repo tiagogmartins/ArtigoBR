@@ -1,7 +1,7 @@
 # faz o nowcasting pro passado (datas)
 # usa a função PRTDB para cortar a base simulando o passado
 
-nowpast <- function(datas, base, trans, delay, aggregate, method, p = 1, q = 1, r = 1){
+nowpast <- function(datas, base, trans, delay, aggregate, method, p = 1, q = 1, r = 1, yAS = NULL){
   
   # base0 é a base cortada para uma data específica
   base0 <- list()
@@ -25,27 +25,33 @@ nowpast <- function(datas, base, trans, delay, aggregate, method, p = 1, q = 1, 
     
     # painel balanceado
    if (method == "EM"){
-     stationaryBase <- cbind(X[,trans == 0], X[,trans == 1]/lag(X[,trans == 1], k = -1) - 1, diff(X[,trans == 2]),
-                             (X[,trans == 3]/lag(X[,trans == 3], k = -12) - 1) - (lag(X[,trans == 3],-1)/lag(X[,trans == 3], k = -13) - 1),
-                             diff(X[,trans == 4],12) - diff(lag(X,-1)[,trans == 4],12)
+     stationaryBase <- cbind(tryCatch(X[,trans == 0], error = function(e) NULL),
+                             tryCatch(X[,trans == 1]/lag(X[,trans == 1], k = -1) - 1, error = function(e) NULL), 
+                             tryCatch(diff(X[,trans == 2]), error = function(e) NULL), 
+                             tryCatch((X[,trans == 3]/lag(X[,trans == 3], k = -12) - 1) - (lag(X[,trans == 3],-1)/lag(X[,trans == 3], k = -13) - 1), error = function(e) NULL), 
+                             tryCatch(diff(X[,trans == 4],12) - diff(lag(X,-1)[,trans == 4],12), error = function(e) NULL) 
      )
-     colnames(stationaryBase) <- colnames(X)[c(which(trans == 0),which(trans == 1),which(trans == 2),which(trans == 3),which(trans == 4)) ]
+     colnames(stationaryBase) <- colnames(X)[c(tryCatch(which(trans == 0), error = function(e) NULL),
+                                               tryCatch(which(trans == 1), error = function(e) NULL),
+                                               tryCatch(which(trans == 2), error = function(e) NULL),
+                                               tryCatch(which(trans == 3), error = function(e) NULL),
+                                               tryCatch(which(trans == 4), error = function(e) NULL))]
      XB <- stationaryBase[,colnames(X)]
+     brgdpEst <- ts(c(na.omit(brgdpEst),NA,NA,NA), start = start(na.omit(brgdpEst)), freq = 4)
      
+     XB <- tryCatch(XB[,!colSums(is.na(XB)) == nrow(XB)], error = function(e) XB)
    } else {
      XB <- Bpanel(X, trans = trans, aggregate = aggregate) 
      
    }
     
-    
-    
     # modelagem PIB
     now <- nowcast(y = brgdpEst, x = XB, q = q, r = r, p = p, method = method)
     
     # previsões
-    backcst <- head(na.omit(now$yfcst[,3]),1)
-    nowcst <- tail(head(na.omit(now$yfcst[,3]),2),1)
-    forecst <- tail(head(na.omit(now$yfcst[,3]),3),1)
+    backcst <- tryCatch(head(na.omit(now$yfcst[,3]),1), error = function(e) head(tail(now$yfcst[,3],3),1))
+    nowcst <- tryCatch(tail(head(na.omit(now$yfcst[,3]),2),1), error = function(e) head(tail(now$yfcst[,3],2),1))
+    forecst <- tryCatch(tail(head(na.omit(now$yfcst[,3]),3),1), error = function(e) tail(now$yfcst[,3],1))
     
     # previsões no nível
     backcstNivel <- backcst + c(tail(na.omit(lag(brgdp,-1) + lag(brgdp,-4) - lag(brgdp,-5)),1))
@@ -62,7 +68,8 @@ nowpast <- function(datas, base, trans, delay, aggregate, method, p = 1, q = 1, 
     m <- seas(brgdpNovo, transform.function = "auto", regression.aictest = c("td","easter"), 
               outlier.types = "all", x11 = "", pickmdl.method = "best", pickmdl.identify = "all",
               forecast.maxlead = 6, forecast.maxback = 0)
-    brgdpAS <- ts(c(na.omit(month2qtr(base0[[i]][,"serie22109"])),tail(final(m),3)), end = end(final(m)), freq = 4)
+    brgdpAS <- tryCatch(ts(c(na.omit(month2qtr(base0[[i]][,"serie22109"])),tail(final(m),3)), end = end(final(m)), freq = 4),
+                        error = function(e) ts(c(na.omit(yAS),tail(final(m),3)), end = end(final(m)), freq = 4))
     
     # previsão: variação trimestral (trimestre imediatamente anterior)
     brgdpVarQ <- tail((brgdpAS/lag(brgdpAS,-1)-1)*100,3)
