@@ -89,76 +89,150 @@ nowpast <- function(datas, base, trans, delay, aggregate, method, p = 1, q = 1, 
 }
 
 
-nowpast.plot <- function(out){
+nowpast.plot <- function(out, y, yAS){
   
-  par(mar = c(2,2,2,2), mfrow = c(2,2))
+  # y <- month2qtr(base[,"serie22099"])
+  # yAS <- ts(read.csv2("pib_dessazonalizado22109.csv")[,-1], start = c(1996,1), freq = 4)
+  # out <- nowpast2008
+  
+  yVarQ <- (yAS/lag(yAS,-1)-1)*100
+  yVarA <- (y/lag(y,-4)-1)*100
   
   nivel <- out$nivel
   varQ <- out$varQ
   varA <- out$varA
   acum4 <- out$acum4
   
+  y <- window(y, start = start(nivel), end = end(nivel), freq = 4)
+  yVarQ <- window(yVarQ, start = start(nivel), end = end(nivel), freq = 4)
+  yVarA <- window(yVarA, start = start(nivel), end = end(nivel), freq = 4)
+  
+  names <- substr(as.Date(na.omit(y)),1,7)
+  names <- gsub("-01","-Q1",names)
+  names <- gsub("-04","-Q2",names)
+  names <- gsub("-07","-Q3",names)
+  names <- gsub("-10","-Q4",names)
+  
+  par(mar = c(3,3,3,2), mfrow = c(2,2))
+  
   # nível
-  nivel0 <- window(nivel, end = end(na.omit(pib)), freq = 4)
-  a <- barplot(c(window(pib, start = c(2015,4), freq = 4)), ylim = c(0,200), main = "nivel")
-  points(x = rep(a[1,1],10), y = c(nivel0[1,1:10]), type = "l", col = "red")
-  points(x = a[1,1], y = nivel0[1,10], pch = 19)
-  points(x = rep(a[2,1],23), y = c(nivel0[2,1:23]), type = "l", col = "red")
-  points(x = a[2,1], y = nivel0[2,23], pch = 19)
-  points(x = rep(a[3,1],23), y = c(nivel0[3,1:23]), type = "l", col = "red")
-  points(x = a[3,1], y = nivel0[3,23], pch = 19)
-  points(x = rep(a[4,1],39), y = c(nivel0[4,11:49]), type = "l", col = "red")
-  points(x = a[4,1], y = nivel0[4,49], pch = 19)
-  points(x = rep(a[5,1],39), y = c(nivel0[5,11:49]), type = "l", col = "red")
-  points(x = a[5,1], y = nivel0[5,49], pch = 19)
-  points(x = rep(a[6,1],39), y = c(nivel0[6,11:49]), type = "l", col = "red")
-  points(x = a[6,1], y = nivel0[6,49], pch = 19)
-  points(x = rep(a[7,1],39), y = c(nivel0[7,50:88]), type = "l", col = "red")
-  points(x = a[7,1], y = nivel0[7,88], pch = 19)
-  points(x = rep(a[8,1],39), y = c(nivel0[8,50:88]), type = "l", col = "red")
-  points(x = a[8,1], y = nivel0[8,88], pch = 19)
+  nivel0 <- data.frame(t(window(nivel, end = end(na.omit(y)), freq = 4)))
+  a <- barplot(c(na.omit(y)), ylim = c(0,200), main = "Nível", names.arg = names, border = "steelblue", col = "skyblue")
+  for(i in 1:ncol(nivel0)){
+    points(x = rep(a[i,1],sum(!is.na(nivel0[,i]))), y = nivel0[!is.na(nivel0[,i]),i], type = "l", col = "#CD0000")
+    points(x = a[i,1], y = nivel0[max(which(!is.na(nivel0[,i]))),i], pch = 19, col = "#CD0000")
+  }
   
   # variação trimestral (trimestre imediatamente anterior)
-  varQ0 <- window(varQ, end = end(na.omit(pib)), freq = 4)
-  a <- barplot(c(window(pibVarQ, start = c(2015,4), freq = 4)), ylim = c(-5,5), main = "varQ")
-  points(x = rep(a[1,1],10), y = c(varQ0[1,1:10]), type = "l", col = "red")
-  points(x = a[1,1], y = varQ0[1,10], pch = 19)
-  points(x = rep(a[2,1],23), y = c(varQ0[2,1:23]), type = "l", col = "red")
-  points(x = a[2,1], y = varQ0[2,23], pch = 19)
-  points(x = rep(a[3,1],23), y = c(varQ0[3,1:23]), type = "l", col = "red")
-  points(x = a[3,1], y = varQ0[3,23], pch = 19)
-  points(x = rep(a[4,1],39), y = c(varQ0[4,11:49]), type = "l", col = "red")
-  points(x = a[4,1], y = varQ0[4,49], pch = 19)
-  points(x = rep(a[5,1],39), y = c(varQ0[5,11:49]), type = "l", col = "red")
-  points(x = a[5,1], y = varQ0[5,49], pch = 19)
-  points(x = rep(a[6,1],39), y = c(varQ0[6,11:49]), type = "l", col = "red")
-  points(x = a[6,1], y = varQ0[6,49], pch = 19)
-  points(x = rep(a[7,1],39), y = c(varQ0[7,50:88]), type = "l", col = "red")
-  points(x = a[7,1], y = varQ0[7,88], pch = 19)
-  points(x = rep(a[8,1],39), y = c(varQ0[8,50:88]), type = "l", col = "red")
-  points(x = a[8,1], y = varQ0[8,88], pch = 19)
+  varQ0 <- data.frame(t(window(varQ, end = end(na.omit(y)), freq = 4)))
+  a <- barplot(c(na.omit(yVarQ)), ylim = c(min(varQ0, na.rm = T) -2, max(varQ0, na.rm = T) + 2), main = "Variação Trimestral\n(trimestre imediatamente anterior)", names.arg = names, border = "steelblue", col = "skyblue")
+  for(i in 1:ncol(varQ0)){
+    points(x = rep(a[i,1],sum(!is.na(varQ0[,i]))), y = varQ0[!is.na(varQ0[,i]),i], type = "l", col = "#CD0000")
+    points(x = a[i,1], y = varQ0[max(which(!is.na(varQ0[,i]))),i], pch = 19, col = "#CD0000")
+  }
   
-  # variação
-  varA0 <- window(varA, end = end(na.omit(pib)), freq = 4)
-  a <- barplot(c(window(pibVarA, start = c(2015,4), freq = 4)), ylim = c(-10,5), main = "varA")
-  points(x = rep(a[1,1],10), y = c(varA0[1,1:10]), type = "l", col = "red")
-  points(x = a[1,1], y = varA0[1,10], pch = 19)
-  points(x = rep(a[2,1],23), y = c(varA0[2,1:23]), type = "l", col = "red")
-  points(x = a[2,1], y = varA0[2,23], pch = 19)
-  points(x = rep(a[3,1],23), y = c(varA0[3,1:23]), type = "l", col = "red")
-  points(x = a[3,1], y = varA0[3,23], pch = 19)
-  points(x = rep(a[4,1],39), y = c(varA0[4,11:49]), type = "l", col = "red")
-  points(x = a[4,1], y = varA0[4,49], pch = 19)
-  points(x = rep(a[5,1],39), y = c(varA0[5,11:49]), type = "l", col = "red")
-  points(x = a[5,1], y = varA0[5,49], pch = 19)
-  points(x = rep(a[6,1],39), y = c(varA0[6,11:49]), type = "l", col = "red")
-  points(x = a[6,1], y = varA0[6,49], pch = 19)
-  points(x = rep(a[7,1],39), y = c(varA0[7,50:88]), type = "l", col = "red")
-  points(x = a[7,1], y = varA0[7,88], pch = 19)
-  points(x = rep(a[8,1],39), y = c(varA0[8,50:88]), type = "l", col = "red")
-  points(x = a[8,1], y = varA0[8,88], pch = 19)
+  
+  # variação anual
+  varA0 <- data.frame(t(window(varA, end = end(na.omit(y)), freq = 4)))
+  a <- barplot(c(na.omit(yVarA)), ylim = c(min(varA0, na.rm = T) -2, max(varA0, na.rm = T) + 2), main = "Variação Anual\n(trimestre do ano anterior)", names.arg = names, border = "steelblue", col = "skyblue")
+  for(i in 1:ncol(varA0)){
+    points(x = rep(a[i,1],sum(!is.na(varA0[,i]))), y = varA0[!is.na(varA0[,i]),i], type = "l", col = "#CD0000")
+    points(x = a[i,1], y = varA0[max(which(!is.na(varA0[,i]))),i], pch = 19, col = "#CD0000")
+  }
+  
 }
 
+nowpast.plot2 <- function(out, y, yAS, type = 1){
+  
+  # y <- month2qtr(base[,"serie22099"])
+  # yAS <- ts(read.csv2("pib_dessazonalizado22109.csv")[,-1], start = c(1996,1), freq = 4)
+  # out <- nowpast2008
+  
+  yVarQ <- (yAS/lag(yAS,-1)-1)*100
+  yVarA <- (y/lag(y,-4)-1)*100
+  
+  nivel <- out$nivel
+  varQ <- out$varQ
+  varA <- out$varA
+  acum4 <- out$acum4
+  
+  y <- window(y, start = start(nivel), end = end(nivel), freq = 4)
+  yVarQ <- window(yVarQ, start = start(nivel), end = end(nivel), freq = 4)
+  yVarA <- window(yVarA, start = start(nivel), end = end(nivel), freq = 4)
+  
+  names <- substr(as.Date(na.omit(y)),1,7)
+  names <- gsub("-01","-Q1",names)
+  names <- gsub("-04","-Q2",names)
+  names <- gsub("-07","-Q3",names)
+  names <- gsub("-10","-Q4",names)
+  
+  if(type == 1){  # nível
+    
+    par(mar = c(3,3,3,2), mfrow = c(3,3))
+    
+    nivel0 <- data.frame(t(window(nivel, end = end(na.omit(y)), freq = 4)))
+    colnames(nivel0) <- as.Date(window(nivel, end = end(na.omit(y)), freq = 4))
+    
+    titulos <- substr(colnames(nivel0),1,7)
+    titulos <- gsub("-01","-Q1",titulos)
+    titulos <- gsub("-04","-Q2",titulos)
+    titulos <- gsub("-07","-Q3",titulos)
+    titulos <- gsub("-10","-Q4",titulos)
+    
+    for(i in 1:ncol(nivel0)){
+      plot(y = nivel0[!is.na(nivel0[,i]),i], x = 1:sum(!is.na(nivel0[,i])), type = "o", xaxt = "n", 
+           ylim = c(min(c(y[i],nivel0[,i]), na.rm = T)-2, max(c(y[i],nivel0[,i]), na.rm = T)),
+           col = "steelblue", lwd = 2, main = paste0(titulos[i],"\nNível"), ylab = "")
+      abline(h = y[i], lty = 3, col = "#CD0000")
+      axis(1, labels = rownames(nivel0)[!is.na(nivel0[,i])], at = 1:sum(!is.na(nivel0[,i])))
+    }
+    
+  }else if(type == 2){  # varQ
+    
+    par(mar = c(3,3,3,2), mfrow = c(3,3))
+    
+    varQ0 <- data.frame(t(window(varQ, end = end(na.omit(y)), freq = 4)))
+    colnames(varQ0) <- as.Date(window(varQ, end = end(na.omit(y)), freq = 4))
+    
+    titulos <- substr(colnames(varQ0),1,7)
+    titulos <- gsub("-01","-Q1",titulos)
+    titulos <- gsub("-04","-Q2",titulos)
+    titulos <- gsub("-07","-Q3",titulos)
+    titulos <- gsub("-10","-Q4",titulos)
+    
+    for(i in 1:ncol(varQ0)){
+      plot(y = varQ0[!is.na(varQ0[,i]),i], x = 1:sum(!is.na(varQ0[,i])), type = "o", xaxt = "n", 
+           ylim = c(min(c(yVarQ[i],varQ0[,i]), na.rm = T)-2, max(c(yVarQ[i],varQ0[,i]), na.rm = T)),
+           col = "steelblue", lwd = 2, main = paste0(titulos[i],"\nVariação trimestral (trimestre imed. anterior)"), ylab = "")
+      abline(h = yVarQ[i], lty = 3, col = "#CD0000")
+      axis(1, labels = rownames(varQ0)[!is.na(varQ0[,i])], at = 1:sum(!is.na(varQ0[,i])))
+    }
+    
+  }else if(type == 3){  # varA
+    
+    par(mar = c(3,3,3,2), mfrow = c(3,3))
+    
+    varA0 <- data.frame(t(window(varA, end = end(na.omit(y)), freq = 4)))
+    colnames(varA0) <- as.Date(window(varA, end = end(na.omit(y)), freq = 4))
+    
+    titulos <- substr(colnames(varA0),1,7)
+    titulos <- gsub("-01","-Q1",titulos)
+    titulos <- gsub("-04","-Q2",titulos)
+    titulos <- gsub("-07","-Q3",titulos)
+    titulos <- gsub("-10","-Q4",titulos)
+    
+    for(i in 1:ncol(varA0)){
+      plot(y = varA0[!is.na(varA0[,i]),i], x = 1:sum(!is.na(varA0[,i])), type = "o", xaxt = "n", 
+           ylim = c(min(c(yVarA[i],varA0[,i]), na.rm = T)-2, max(c(yVarA[i],varA0[,i]), na.rm = T)),
+           col = "steelblue", lwd = 2, main = paste0(titulos[i],"\nVariação Anual (trimestre do ano anterior)"), ylab = "")
+      abline(h = yVarA[i], lty = 3, col = "#CD0000")
+      axis(1, labels = rownames(varA0)[!is.na(varA0[,i])], at = 1:sum(!is.na(varA0[,i])))
+    }
+
+  }
+  
+}
+  
 nowpast.error <- function(out, y, yAS){
   
   # y <- month2qtr(base[,"serie22099"])
@@ -185,7 +259,6 @@ nowpast.error <- function(out, y, yAS){
     rmse_nivel[i,1] <- sqrt(mean((nivel[i,] - y[i])^2, na.rm = T))
     rmse_varQ[i,1] <- sqrt(mean((varQ[i,] - yVarQ[i])^2, na.rm = T))
     rmse_varA[i,1] <- sqrt(mean((varA[i,] - yVarA[i])^2, na.rm = T))
-    
   }
   rmse_nivel <- ts(rmse_nivel, start = start(y), freq = 4)
   rmse_varQ <- ts(rmse_varQ, start = start(y), freq = 4)
@@ -193,7 +266,5 @@ nowpast.error <- function(out, y, yAS){
   
   # output
   na.omit(cbind(nivel = rmse_nivel, varQ = rmse_varQ, varA = rmse_varA))
-  
-  
   
 }
