@@ -87,18 +87,20 @@ nowpast16 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semana
                      r = 2, p = 1, q = 1, aggregate = F, method = "2sm")
 nowpast.plot(nowpast16)
 
+data.frame(nowpast16$varA[6,])
 
-nowpast.plot(nowpast4)
-nowpast.plot(nowpast5)
-nowpast.plot(nowpast6)
-nowpast.plot(nowpast7)
-nowpast.plot(nowpast8)
-nowpast.plot(nowpast11)
-nowpast.plot(nowpast12)
-nowpast.plot(nowpast13)
-nowpast.plot(nowpast14)
-nowpast.plot(nowpast15)
-nowpast.plot(nowpast16)
+
+nowpast.plot(nowpast4, y = pib, yAS = pibAS)
+nowpast.plot(nowpast5, y = pib, yAS = pibAS)
+nowpast.plot(nowpast6,  y = pib, yAS = pibAS)
+nowpast.plot(nowpast7,  y = pib, yAS = pibAS)
+nowpast.plot(nowpast8,  y = pib, yAS = pibAS)
+nowpast.plot(nowpast11,  y = pib, yAS = pibAS)
+nowpast.plot(nowpast12,  y = pib, yAS = pibAS)
+nowpast.plot(nowpast13,  y = pib, yAS = pibAS)
+nowpast.plot(nowpast14, y = pib, yAS = pibAS)
+nowpast.plot(nowpast15,  y = pib, yAS = pibAS)
+nowpast.plot(nowpast16, y = pib, yAS = pibAS)
 
 colMeans(nowpast.error(out = nowpast4, y = pib, yAS = pibAS))
 colMeans(nowpast.error(out = nowpast5, y = pib, yAS = pibAS))
@@ -112,3 +114,10 @@ colMeans(nowpast.error(out = nowpast14, y = pib, yAS = pibAS))
 colMeans(nowpast.error(out = nowpast15, y = pib, yAS = pibAS))
 colMeans(nowpast.error(out = nowpast16, y = pib, yAS = pibAS))
 
+
+
+datas <- seq.Date(as.Date("2008-01-04"),as.Date("2017-12-31"), by = 7)
+
+nowpast17 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                     r = 2, p = 2, q = 2, aggregate = F, method = "2sm")
+nowpast.plot(nowpast17, y = pib, yAS = pibAS)
