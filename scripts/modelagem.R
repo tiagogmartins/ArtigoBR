@@ -12,7 +12,7 @@ base <- ts(read_excel("base2000.xlsx")[,-1], start = c(2000,1), freq = 12)
 legenda <- data.frame(read_excel("base2000.xlsx", sheet = 2)  )
 
 # BRGDP (estacionário)
-brgdp <- month2qtr(lag(base[,"serie22099"],-2))
+brgdp <- month2qtr(base[,"serie22099"])
 brgdpEst <- diff(diff(brgdp),4)
 # brgdpEst2 <- (brgdp/lag(brgdp,-12) - 1) - (lag(brgdp,-1)/lag(brgdp,-13) - 1)
 # plot(brgdp)
@@ -32,7 +32,7 @@ XB <- Bpanel(X, trans = legenda$transf, aggregate = T)
 colnames(X)[!colnames(X) %in% colnames(XB)]
 
 # modelagem PIB
-now <- nowcast(y = brgdpEst, x = XB, q = 1, r = 1, p = 1, method = "2sq")
+now <- nowcast(y = brgdpEst, x = XB, q = 2, r = 2, p = 2, method = "2sq")
 
 
 summary(now$reg)
@@ -63,6 +63,21 @@ brgdpAS <- final(m)
 
 # previsão: acumulado no ano
 (mean(tail(brgdpNovo,4))/mean(head(tail(brgdpNovo,8),4))-1)*100
+
+
+
+# selecting and transforming y  
+
+
+# selecting and transforming x 
+trans <- legenda$transf[-brgdp_position]
+stationaryBase <- cbind(X[,trans == 0], X[,trans == 1]/lag(X[,trans == 1], k = -1) - 1, diff(X[,trans == 2]),
+                        (X[,trans == 3]/lag(X[,trans == 3], k = -12) - 1) - (lag(X[,trans == 3],-1)/lag(X[,trans == 3], k = -13) - 1),
+                        diff(X[,trans == 4],12) - diff(lag(X,-1)[,trans == 4],12)
+                        )
+colnames(stationaryBase) <- colnames(X)[c(which(trans == 0),which(trans == 1),which(trans == 2),which(trans == 3),which(trans == 4)) ]
+stationaryBase <- stationaryBase[,colnames(X)]
+nowEM <- nowcast(y = brgdpEst, x = stationaryBase, q = 3, r = 3, p = 1, method = "EM")
 
 
 # # X estacionário para o EM
