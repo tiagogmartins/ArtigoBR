@@ -23,69 +23,92 @@ pibVarA <- (pib/lag(pib,-4)-1)*100
 
 datas <- seq.Date(as.Date("2016-01-01"),as.Date("2017-12-31"), by = 7)
 
-nowpast1 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+nowpastSQ1 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
                     r = 1, p = 1, q = 1, aggregate = T, method = "2sq")
-nowpast.plot(nowpast1)
-
-nowpast2 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
-                    r = 2, p = 2, q = 1, aggregate = T, method = "2sq")
-nowpast.plot(nowpast2)
-
-nowpast3 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
-                    r = 3, p = 3, q = 1, aggregate = T, method = "2sq")
-nowpast.plot(nowpast3)
-
-nowpast4 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+nowpastSM1 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
                     r = 1, p = 1, q = 1, aggregate = F, method = "2sm")
-nowpast.plot(nowpast4)
+nowpastEM1 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                    r = 1, p = 1, q = 1, aggregate = T, method = "EM")
 
-nowpast5 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+
+nowpastSQ2 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                    r = 2, p = 2, q = 1, aggregate = T, method = "2sq")
+nowpastSM2 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
                     r = 2, p = 2, q = 1, aggregate = F, method = "2sm")
-nowpast.plot(nowpast5)
+nowpastEM2 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                    r = 2, p = 2, q = 1, aggregate = T, method = "EM")
 
-nowpast6 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+
+nowpastSQ3 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                    r = 3, p = 3, q = 1, aggregate = T, method = "2sq")
+nowpastSM3 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
                     r = 3, p = 3, q = 1, aggregate = F, method = "2sm")
-nowpast.plot(nowpast6)
+nowpastEM3 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                    r = 3, p = 3, q = 1, aggregate = T, method = "EM")
 
-nowpast7 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
-                    r = 2, p = 1, q = 2, aggregate = F, method = "2sm")
-nowpast.plot(nowpast7)
 
-nowpast8 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
-                    r = 3, p = 1, q = 3, aggregate = F, method = "2sm")
-nowpast.plot(nowpast8)
-
-nowpast9 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+nowpastSQ4 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
                     r = 2, p = 1, q = 2, aggregate = T, method = "2sq")
-nowpast.plot(nowpast9)
+nowpastSM4 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                    r = 2, p = 1, q = 2, aggregate = F, method = "2sm")
+nowpastEM4 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                    r = 2, p = 1, q = 2, aggregate = T, method = "EM")
 
-nowpast10 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
-                    r = 3, p = 1, q = 3, aggregate = T, method = "2sq")
-nowpast.plot(nowpast10)
 
-nowpast11 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
-                    r = 3, p = 1, q = 2, aggregate = F, method = "2sm")
-nowpast.plot(nowpast11)
+nowpastSQ5 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                     r = 3, p = 1, q = 3, aggregate = T, method = "2sq")
+nowpastSM5 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                    r = 3, p = 1, q = 3, aggregate = F, method = "2sm")
+nowpastEM5 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                    r = 3, p = 1, q = 3, aggregate = F, method = "EM")
 
-nowpast12 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+
+nowpastSQ6 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                    r = 3, p = 1, q = 2, aggregate = T, method = "2sq")
+nowpastSM6 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                     r = 3, p = 1, q = 2, aggregate = F, method = "2sm")
+nowpastEM6 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                     r = 3, p = 1, q = 2, aggregate = F, method = "Em")
+
+nowpastSQ7 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                     r = 3, p = 1, q = 1, aggregate = T, method = "2sq")
+nowpastSM7 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
                      r = 3, p = 1, q = 1, aggregate = F, method = "2sm")
-nowpast.plot(nowpast12)
+nowpastEM7 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                     r = 3, p = 1, q = 1, aggregate = F, method = "EM")
 
-nowpast13 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+
+nowpastSQ8 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                     r = 3, p = 2, q = 2, aggregate = T, method = "2sq")
+nowpastSM8 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
                      r = 3, p = 2, q = 2, aggregate = F, method = "2sm")
-nowpast.plot(nowpast13)
+nowpastEM8 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                     r = 3, p = 2, q = 2, aggregate = F, method = "EM")
 
-nowpast14 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+
+nowpastSQ9 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                     r = 3, p = 3, q = 3, aggregate = T, method = "2sq")
+nowpastSM9 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
                      r = 3, p = 3, q = 3, aggregate = F, method = "2sm")
-nowpast.plot(nowpast14)
+nowpastEM9 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                     r = 3, p = 3, q = 3, aggregate = F, method = "EM")
 
-nowpast15 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+
+nowpastSQ10 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                     r = 2, p = 2, q = 2, aggregate = T, method = "2sq")
+nowpastSM10 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
                      r = 2, p = 2, q = 2, aggregate = F, method = "2sm")
-nowpast.plot(nowpast15)
+nowpastEM10 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                     r = 2, p = 2, q = 2, aggregate = F, method = "EM")
 
-nowpast16 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+
+nowpastSQ11 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                     r = 2, p = 1, q = 1, aggregate = T, method = "2sq")
+nowpastSM11 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
                      r = 2, p = 1, q = 1, aggregate = F, method = "2sm")
-nowpast.plot(nowpast16)
+nowpastEM11 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+                     r = 2, p = 1, q = 1, aggregate = F, method = "EM")
+
 
 data.frame(nowpast16$varA[6,])
 
