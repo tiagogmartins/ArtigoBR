@@ -113,6 +113,33 @@ nowpastSM11 <- nowpast(datas = datas, base = base, delay = legenda$delay.em.sema
 
 data.frame(nowpast16$varA[6,])
 
+saveRDS(nowpastSQ1,"nowpastSQ1.rds")
+saveRDS(nowpastSQ2,"nowpastSQ2.rds")
+saveRDS(nowpastSQ3,"nowpastSQ3.rds")
+saveRDS(nowpastSQ4,"nowpastSQ4.rds")
+saveRDS(nowpastSQ5,"nowpastSQ5.rds")
+saveRDS(nowpastSQ6,"nowpastSQ6.rds")
+saveRDS(nowpastSQ7,"nowpastSQ7.rds")
+saveRDS(nowpastSQ8,"nowpastSQ8.rds")
+saveRDS(nowpastSQ9,"nowpastSQ9.rds")
+saveRDS(nowpastSQ10,"nowpastSQ10.rds")
+saveRDS(nowpastSQ11,"nowpastSQ11.rds")
+saveRDS(nowpastSM1,"nowpastSM1.rds")
+saveRDS(nowpastSM2,"nowpastSM2.rds")
+saveRDS(nowpastSM3,"nowpastSM3.rds")
+saveRDS(nowpastSM4,"nowpastSM4.rds")
+saveRDS(nowpastSM5,"nowpastSM5.rds")
+saveRDS(nowpastSM6,"nowpastSM6.rds")
+saveRDS(nowpastSM7,"nowpastSM7.rds")
+saveRDS(nowpastSM8,"nowpastSM8.rds")
+saveRDS(nowpastSM9,"nowpastSM9.rds")
+saveRDS(nowpastSM10,"nowpastSM10.rds")
+saveRDS(nowpastSM11,"nowpastSM11.rds")
+
+
+
+
+
 
 nowpast.plot(nowpastSQ1, y = pib, yAS = pibAS)
 nowpast.plot(nowpastSM1, y = pib, yAS = pibAS)
