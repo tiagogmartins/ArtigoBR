@@ -10,7 +10,9 @@
 \usepackage[T1]{fontenc}
 % \usepackage{hyphenat} 
 \usepackage[portuguese]{babel}
-
+\usepackage{adjustbox}
+\usepackage{longtable}
+\usepackage{pdflscape}
 % espaçamento duplo
 \usepackage{setspace}
 \onehalfspace 
@@ -291,7 +293,160 @@ O algoritmo então converge até que os parâmetros sejam iguais nas iterações
 
 \subsection{Base de dados}\label{base}
 
-\textcolor{red}{inserir base de dados}
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{landscape}
+\begin{center}
+\begin{longtable}{|l|l|l|l|}
+
+\caption{Data base.} \label{tab:long} \\
+
+\hline \multicolumn{1}{|c|}{\textbf{Series code}} & \multicolumn{1}{c|}{\textbf{Series name}} & \multicolumn{1}{c|}{\textbf{Transformation}} & \multicolumn{1}{c|}{\textbf{Delay}} \\ \hline
+\endfirsthead
+
+\multicolumn{3}{c}%
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\hline \multicolumn{1}{|c|}{\textbf{First column}} & \multicolumn{1}{c|}{\textbf{Second column}} & \multicolumn{1}{c|}{\textbf{Third column}} & \multicolumn{1}{c|}{\textbf{Delay}} \\ \hline
+\endhead
+
+\hline \multicolumn{3}{|r|}{{Continued on next page}} \\ \hline
+\endfoot
+
+\hline \hline
+\endlastfoot
+
+serie1 & Exchange rate- Free- United States dollar (sale)-1 u.m.c/US\$ & 1 & 0 \\
+serie12 & Interest rate- CDI & 1 & 0 \\
+serie188 & National Consumer Price Index (INPC) & 4 & 14 \\
+serie189 & General Price Index-Market (IGP-M) & 0 & 0 \\
+serie192 & National Index of Building Costs (INCC) & 4 & 0 \\
+serie193 & Consumer Price Index- Săo Paulo (IPC-FIPE) & 4 & 7 \\
+serie194 & Cost of Living Index (ICV-Dieese) & 4 & 7 \\
+serie206 & Staple food basket u.m.c & 1 & 7 \\
+serie225 & Wholesale Price Index (IPA) & 0 & 14 \\
+serie432 & Interest rate- Selic target & 1 & 0 \\
+serie433 & Broad National Consumer Price Index (IPCA) & 4 & 7 \\
+serie1178 & Interest rate- Selic in annual terms (basis 252) & 4 & 0 \\
+serie1344 & Installed capacity utilization- General(FGV) & 3 & 0 \\
+serie1373 & vehicle production (total) & 3 & 14 \\
+serie1374 & passenger cars and light commercial vehicles production & 3 & 14 \\
+serie1375 & truck production & 3 & 14 \\
+serie1376 & bus production & 3 & 14 \\
+serie1377 & motorcycle production & 3 & 14 \\
+serie1378 & vehicle sales (total) & 3 & 14 \\
+serie1379 & domestic vehicle sales & 3 & 14 \\
+serie1380 & vehicle exports & 3 & 14 \\
+serie1382 & productions of mechanised cultivators & 4 & 14 \\
+serie1383 & four wheel tractor production & 3 & 14 \\
+serie1384 & track driven tractor production & 3 & 14 \\
+serie1385 & production of combined harvesters & 3 & 14 \\
+serie1386 & production of mechanical diggers & 3 & 14 \\
+serie1387 & other agricultural machinery & 3 & 14 \\
+serie1388 & production of agricultural machinery (total) & 3 & 14 \\
+serie1389 & petroleum derivatives production- crude oil & 1 & 42 \\
+serie1390 & petroleum derivatives production- LGN & 1 & 42 \\
+serie1391 & petroleum derivatives production- total & 1 & 42 \\
+serie1392 & petroleum derivatives production- natural gas & 1 & 42 \\
+serie1402 & electric energy consumption- Brazil- commercial & 3 & 42 \\
+serie1403 & electric energy consumption- Brazil- residential & 3 & 42 \\
+serie1404 & eletric energy consumption- Brazil- industrial & 3 & 42 \\
+serie1405 & eletric energy consumption- Brazil- other & 3 & 42 \\
+serie1406 & eletric energy consumption- Brazil- total & 3 & 42 \\
+serie1453 & Credit sales Index & 3 & 21 \\
+serie1454 & Cash Sales Index & 3 & 21 \\
+serie1455 & sales volume index in the retail sector- Total- Brazil & 3 & 70 \\
+serie1483 & sales volume index in the retail sector- Fuel and lubricants- Brazil & 3 & 70 \\
+serie1496 & sales volume index in the retail sector- Hypermarkets, supermarket, food, beverages and tobacco- Brazil & 3 & 70 \\
+serie1509 & sales volume index in the retail sector- Textiles, Clothing and Footwear- Brazil & 3 & 70 \\
+serie1522 & sales volume index in the retail sector- Furniture and white goods- Brazil & 3 & 70 \\
+serie1548 & sales volume index in the retail sector- Vehicles and motorcycles, spare parts- Brazil & 3 & 70 \\
+serie1561 & sales volume index in the retail sector- Hypermarkets, supermarket- Brazil & 3 & 70 \\
+serie2053 & Net public debt- Balances in c.m.u. (million) - Total- Federal Government and Banco Central & 1 & 35 \\
+serie2057 & Net public debt- Balances in c.m.u. (million) - Total- State governments & 1 & 35 \\
+serie2058 & Net public debt- Balances in c.m.u. (million) - Total- Municipal governments & 1 & 35 \\
+serie4393 & Consumer confidence index & 3 & 14 \\
+serie4394 & Current economic conditions index & 3 & 14 \\
+serie4395 & future expectations index & 1 & 14 \\
+serie4503 & net public debt (\%GDP)- total- Federal Government and Banco Central & 2 & 35 \\
+serie4506 & net public debt (\% GDP)- Total- State and municipal governments & 2 & 35 \\
+serie4507 & net public debt (\%GDP)- total- State governments & 2 & 35 \\
+serie4508 & net public debt (\% GDP)- total- Municipal governments & 2 & 35 \\
+serie4509 & net public debt (\%GDP)- total- State enterprises & 2 & 35 \\
+serie4513 & net public debt(\%GDP)- total- consolidated public sector & 2 & 35 \\
+serie7341 & Business confidence index- General & 1 & 0 \\
+serie7357 & steel production (1992= 100) & 3 & 42 \\
+serie7384 & sales of factory authorized vehicle outlets- Passenger cars sales & 3 & 7 \\
+serie7385 & sales of factory authorized vehicle outlets- Light commercial cars sales & 3 & 7 \\
+serie7386 & sales of factory authorized vehicle outlets- Truck sales & 3 & 7 \\
+serie7412 & balanced checks - in 1000 & 3 & 98 \\
+serie7413 & returned checks - in 1000 & 3 & 98 \\
+serie7415 & BNDES system disbursements- Total & 3 & 21 \\
+serie7416 & BNDES system disbursements- Manufacturing industry & 3 & 21 \\
+serie7417 & BNDES system disbursements- Commerce and Services & 3 & 21 \\
+serie7418 & BNDES system disbursements- Agricultural sector & 3 & 21 \\
+serie7419 & BNDES system disbursements- Vegetable extraction & 3 & 21 \\
+serie7478 & National consumer Price Index- Extended 15 (IPCA-15) & 0 & 0 \\
+serie7495 & SINAPI & 0 & 14 \\
+serie7832 & Ibovespa- monthly percent change & 0 & 14 \\
+serie13667 & Percent of 90 days past due loans of financial institutions under public control - Total & 1 & 14 \\
+serie13673 & Percent of 90 days past due loans of financial institutions under national private control - Total & 1 & 14 \\
+serie13679 & Percent of 90 days past due loans of financial institutions under foreign control - Total & 1 & 14 \\
+serie13685 & Percent of 90 days past due loans of financial institutions under private control - Total & 1 & 14 \\
+serie20048 & Commodity Index - Brazil (until Nov/2017) & 1 & 14 \\
+serie20050 & Commodity Index - Brazil Agriculture (until Nov/2017) & 1 & 14 \\
+serie20051 & Commodity Index - Brazil metal (until Nov/2017) & 1 & 14 \\
+serie20052 & Commodity Index - Brazil Energy (until Nov/2017) & 1 & 14 \\
+serie20099 & Pharmac., medical, orthop, and perfumery articles & 3 & 70 \\
+serie20101 & Books, newspaper, megazines & 3 & 70 \\
+serie20102 & Office, comp./ comunic, equip & 3 & 70 \\
+serie20104 & Other art. Of personal use & 3 & 70 \\
+serie20105 & Building materials & 3 & 70 \\
+serie20106 & Broad trade sector & 3 & 70 \\
+serie20339 & Sondagem de serviços - Índice de Confiança de Serviços- Dessazonalizado & 1 & 7 \\
+serie20340 & Sondagem de Serviços - Índice de Expectativas (IE-S) - Dessazonalizado & 1 & 7 \\
+serie20341 & Residential Real Estate Collateral Value Index & 1 & 98 \\
+serie21637 & PMS- Nominal revenue from services - Total - Brazil & 3 & 42 \\
+serie21859 & General (2012=100) & 3 & 35 \\
+serie21861 & Physical Production- Mineral extraction & 3 & 35 \\
+serie21862 & Physical Production - Manufacturing Industry & 3 & 35 \\
+serie21863 & Physical Production - Capital goods & 3 & 35 \\
+serie21864 & Physical Production- Intermediate goods & 3 & 35 \\
+serie21865 & Physical Production - Consumer goods & 3 & 35 \\
+serie21866 & Physical Production - Durable goods & 3 & 35 \\
+serie21867 & Physical Production - Semi durable and nondurable goods & 3 & 35 \\
+serie21868 & Physical Production - Production of construction inputs & 3 & 35 \\
+serie21924 & Industrial Production (2012=100)- Southeast Region & 3 & 35 \\
+serie21930 & Industrial Production (2012=100)- Northern Region & 3 & 35 \\
+serie21934 & Industrial Production (2012=100)- South & 3 & 35 \\
+serie21939 & Industrial Production (2012=100)- Central- Western Region & 3 & 35 \\
+serie21961 & Industrial Production (2012=100)- Northeast & 3 & 35 \\
+serie22099 & Quaterly GDP- observed data- GDP at market prices & 3 & 70 \\
+serie22109 & Quaterly GDP - seasonally adjusted data - GDP at market prices & 1 & 70 \\
+serie22704 & Balance on goods and services - monthly - net & 3 & 21 \\
+serie22705 & Balance on goods and services - monthly - credit & 3 & 21 \\
+serie22706 & Balance on goods and services - monthly - debit & 3 & 21 \\
+serie22707 & Balance on goods- Balance of Payments - monthly- net & 3 & 21 \\
+serie24352 & capacity utilization- manufacturing industry (FGV) & 1 & 21 \\
+serie24369 & unemployment - PNAD & 3 & 28 \\
+serie24370 & Working age populaton - Continuous PNAD & 1 & 28 \\
+serie24378 & Labor force population - Continuous PNAD & 1 & 28 \\
+serie24379 & employed population - Continuous PNAD & 3 & 28 \\
+serie24382 & real habitually average earnings of employed people- Continuous PNAD & 1 & 28 \\
+serie25241 & registered employees Index - Manufacturing & 3 & 28 \\
+ICI & ICI with seasonal adjust - Industry confidence index & 1 & 0 \\
+ISA & ISA with seasonal adjust - Industry confidence index - Actual situation & 1 & 0 \\
+IE & IE with seasonal adjust - Industry confidence index - Expectation & 1 & 0 \\
+ICOM & ICOM with seasonal adjust-Retail sector extended index & 1 & 0 \\
+ISACOM & ISA-COM with seasonal adjust-Retail sector extended actual situtation index & 1 & 0 \\
+IECOM & IE-COM with seasonal adjust-Retail sector extended expected index & 1 & 0 \\
+ICS & ICS with seasonal adjust - Service confidence index & 1 & 0 \\
+ISAS & ISA-S with seasonal adjust - Service confidence index- Actual situation & 1 & 0 \\
+IES & IE-S with seasonal adjust - Service confidence index- Expectiation & 1 & 0 \\ 
+
+\end{longtable}
+\end{center}
+\end{landscape}
+
 
 \section{Nowcasting do PIB brasileiro}\label{nowcastingBR}
 
