@@ -27,13 +27,12 @@ brgdp_position <- which(colnames(base) == "serie22099")
 X <- base[,-brgdp_position]
 
 # painel balanceado
-XB <- Bpanel(X, trans = legenda$transf, aggregate = T)
+XB <- Bpanel(X, trans = legenda$transf, aggregate = F)
 # séries que foram excluídas da base
 colnames(X)[!colnames(X) %in% colnames(XB)]
 
 # modelagem PIB
-now <- nowcast(y = brgdpEst, x = XB, q = 2, r = 2, p = 2, method = "2sq")
-
+now <- nowcast(y = brgdpEst, x = XB, q = 2, r = 2, p = 2, method = "2sm")
 
 summary(now$reg)
 nowcast.plot(now, type = "fcst")
@@ -59,7 +58,7 @@ qs(m)
 brgdpAS <- final(m)
 
 # previsão: variação trimestral (trimestre imediatamente anterior)
-(brgdpAS/lag(brgdpAS,-1)-1)*100
+tail((brgdpAS/lag(brgdpAS,-1)-1)*100,1)
 
 # previsão: acumulado no ano
 (mean(tail(brgdpNovo,4))/mean(head(tail(brgdpNovo,8),4))-1)*100

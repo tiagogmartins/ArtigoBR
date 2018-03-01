@@ -98,12 +98,16 @@ nowpast <- function(datas, base, trans, delay, aggregate, method, p = 1, q = 1, 
 
 nowpast.plot <- function(out, y, yAS){
   
+  options(warn=-1)
   # y <- month2qtr(base[,"serie22099"])
   # yAS <- ts(read.csv2("pib_dessazonalizado22109.csv")[,-1], start = c(1996,1), freq = 4)
   # out <- nowpast2008
   
   yVarQ <- (yAS/lag(yAS,-1)-1)*100
   yVarA <- (y/lag(y,-4)-1)*100
+  ydata <- data.frame(y, ano = substr(as.Date(y),1,4))
+  yMean <- aggregate(ydata$y, by = list(ydata$ano), FUN = mean, na.rm = T)
+  yVarAcum <- (yMean/lag(yMean,-1)-1)*100
   
   nivel <- out$nivel
   varQ <- out$varQ
@@ -113,6 +117,8 @@ nowpast.plot <- function(out, y, yAS){
   y <- window(y, start = start(nivel), end = end(nivel), freq = 4)
   yVarQ <- window(yVarQ, start = start(nivel), end = end(nivel), freq = 4)
   yVarA <- window(yVarA, start = start(nivel), end = end(nivel), freq = 4)
+  yVarAcum <- window(yVarAcum, start = start(nivel)[1], end = end(nivel), freq = 1)
+  
   
   names <- substr(as.Date(na.omit(y)),1,7)
   names <- gsub("-01","-Q1",names)
@@ -147,10 +153,23 @@ nowpast.plot <- function(out, y, yAS){
     points(x = a[i,1], y = varA0[max(which(!is.na(varA0[,i]))),i], pch = 19, col = "#CD0000")
   }
   
+  # acumulado no ano
+  acum40 <- acum4[grepl("-10-",as.Date(acum4)),]
+  namesAcum <- paste0(substr(as.Date(acum4)[grepl("-10-",as.Date(acum4))],1,4),"-Q4")
+
+  a <- barplot(c(na.omit(yVarAcum)), ylim = c(min(yVarAcum, na.rm = T) -2, max(yVarAcum, na.rm = T) + 2), 
+               main = "Crescimento anual\n(média do ano contra média do ano anterior)", names.arg = namesAcum,
+               border = "steelblue", col = "skyblue")
+  
+  for(i in 1:nrow(acum40)){
+    points(x = rep(a[i,1],sum(!is.na(acum40[i,]))), y = acum40[i,!is.na(acum40[i,])], type = "l", col = "#CD0000")
+    points(x = a[i,1], y = acum40[i,max(which(!is.na(acum40[i,])))], pch = 19, col = "#CD0000")
+  }
+  options(warn=0)
 }
 
 nowpast.plot2 <- function(out, y, yAS, type = 1){
-  
+  options(warn=-1)
   # y <- month2qtr(base[,"serie22099"])
   # yAS <- ts(read.csv2("pib_dessazonalizado22109.csv")[,-1], start = c(1996,1), freq = 4)
   # out <- nowpast2008
@@ -237,11 +256,11 @@ nowpast.plot2 <- function(out, y, yAS, type = 1){
     }
 
   }
-  
+  options(warn=0)
 }
   
 nowpast.error <- function(out, y, yAS){
-  
+  options(warn=-1)
   # y <- month2qtr(base[,"serie22099"])
   # yAS <- ts(read.csv2("pib_dessazonalizado22109.csv")[,-1], start = c(1996,1), freq = 4)
   # out <- nowpast11
@@ -253,25 +272,40 @@ nowpast.error <- function(out, y, yAS){
   
   yVarQ <- (yAS/lag(yAS,-1)-1)*100
   yVarA <- (y/lag(y,-4)-1)*100
+  ydata <- data.frame(y, ano = substr(as.Date(y),1,4))
+  yMean <- aggregate(ydata$y, by = list(ydata$ano), FUN = mean, na.rm = T)
+  yVarAcum <- (yMean/lag(yMean,-1)-1)*100
   
   y <- window(y, start = start(nivel), end = end(nivel), freq = 4)
   yVarQ <- window(yVarQ, start = start(nivel), end = end(nivel), freq = 4)
   yVarA <- window(yVarA, start = start(nivel), end = end(nivel), freq = 4)
+  yVarAcum <- window(yVarAcum, start = start(nivel)[1], end = end(nivel)[1], freq = 1)
   
   rmse_nivel <- matrix(NA, nrow = length(y), ncol = 1)
   rmse_varQ <- matrix(NA, nrow = length(y), ncol = 1)
   rmse_varA <- matrix(NA, nrow = length(y), ncol = 1)
+  rmse_varAcum <- matrix(NA, nrow = length(yVarAcum), ncol = 1)
   
   for(i in 1:length(y)){
     rmse_nivel[i,1] <- sqrt(mean((nivel[i,] - y[i])^2, na.rm = T))
     rmse_varQ[i,1] <- sqrt(mean((varQ[i,] - yVarQ[i])^2, na.rm = T))
     rmse_varA[i,1] <- sqrt(mean((varA[i,] - yVarA[i])^2, na.rm = T))
   }
+  
+  acum40 <- acum4[grepl("-10-",as.Date(acum4)),]
+  for(i in 1:length(yVarAcum)){
+    rmse_varAcum[i,1] <- sqrt(mean((acum40[i,] - yVarAcum[i])^2, na.rm = T))
+  }
+  
   rmse_nivel <- ts(rmse_nivel, start = start(y), freq = 4)
   rmse_varQ <- ts(rmse_varQ, start = start(y), freq = 4)
   rmse_varA <- ts(rmse_varA, start = start(y), freq = 4)
+  rmse_varAcum <- ts(rmse_varAcum, start = start(yVarAcum), freq = 1)
+  
+  options(warn=0)
   
   # output
-  na.omit(cbind(nivel = rmse_nivel, varQ = rmse_varQ, varA = rmse_varA))
+  list(trimestral = na.omit(cbind(nivel = rmse_nivel, varQ = rmse_varQ, varA = rmse_varA)),
+       acumAno =  rmse_varAcum)
   
 }
