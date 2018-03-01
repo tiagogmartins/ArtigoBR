@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.3.1)  1 MAR 2018 15:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.3.1)  1 MAR 2018 15:31
 entering extended mode
 **./Artigo.tex
 (Artigo.tex
@@ -1329,37 +1329,37 @@ Package babel Info: Redefining portuges shorthand "|
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 299.
  [5]
-Overfull \hbox (49.81805pt too wide) in alignment at lines 301--306
+Overfull \hbox (41.46786pt too wide) in alignment at lines 301--306
  [] [] [] [] 
  []
 
 
-Overfull \hbox (49.81805pt too wide) in alignment at lines 306--311
+Overfull \hbox (41.46786pt too wide) in alignment at lines 306--311
  [] [] [] [] 
  []
 
 
-Overfull \hbox (49.81805pt too wide) in alignment at lines 311--314
+Overfull \hbox (41.46786pt too wide) in alignment at lines 311--314
  [] [] [] [] 
  []
 
 
-Overfull \hbox (49.81805pt too wide) in alignment at lines 314--317
+Overfull \hbox (41.46786pt too wide) in alignment at lines 314--317
  [] [] [] [] 
  []
 
 
-Overfull \hbox (49.81805pt too wide) in alignment at lines 317--339
+Overfull \hbox (41.46786pt too wide) in alignment at lines 317--339
  [] [] [] [] 
  []
 
 
-Overfull \hbox (49.81805pt too wide) in alignment at lines 339--359
+Overfull \hbox (41.46786pt too wide) in alignment at lines 339--359
  [] [] [] [] 
  []
 
 
-Overfull \hbox (49.81805pt too wide) in alignment at lines 359--379
+Overfull \hbox (41.46786pt too wide) in alignment at lines 359--379
  [] [] [] [] 
  []
 
@@ -1370,7 +1370,7 @@ Package babel Info: Redefining portuges shorthand "|
 [6
 
 ]
-Overfull \hbox (49.81805pt too wide) in alignment at lines 379--399
+Overfull \hbox (41.46786pt too wide) in alignment at lines 379--399
  [] [] [] [] 
  []
 
@@ -1379,7 +1379,7 @@ Package babel Info: Redefining portuges shorthand "|
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 399.
 [7]
-Overfull \hbox (49.81805pt too wide) in alignment at lines 399--419
+Overfull \hbox (41.46786pt too wide) in alignment at lines 399--419
  [] [] [] [] 
  []
 
@@ -1388,12 +1388,12 @@ Package babel Info: Redefining portuges shorthand "|
 Package babel Info: Redefining portuges shorthand "|
 (babel)             in language  on input line 419.
 [8]
-Overfull \hbox (49.81805pt too wide) in alignment at lines 419--439
+Overfull \hbox (41.46786pt too wide) in alignment at lines 419--439
  [] [] [] [] 
  []
 
 
-Overfull \hbox (49.81805pt too wide) in alignment at lines 439--447
+Overfull \hbox (41.46786pt too wide) in alignment at lines 439--447
  [] [] [] [] 
  []
 
@@ -1439,7 +1439,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 470.
 Here is how much of TeX's memory you used:
  19679 strings out of 493312
  346303 string characters out of 3138876
- 457162 words of memory out of 3000000
+ 457161 words of memory out of 3000000
  22892 multiletter control sequences out of 15000+200000
  570619 words of font info for 93 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1463,7 +1463,7 @@ KTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/
 fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
 e1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
 c/amsfonts/cm/cmtt10.pfb>
-Output written on Artigo.pdf (11 pages, 273837 bytes).
+Output written on Artigo.pdf (11 pages, 273416 bytes).
 PDF statistics:
  244 PDF objects out of 1000 (max. 8388607)
  46 named destinations out of 1000 (max. 500000)
