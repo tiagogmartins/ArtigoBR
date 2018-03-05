@@ -306,7 +306,11 @@ O algoritmo então converge até que os parâmetros sejam iguais nas iterações
 
 \multicolumn{3}{c}%
 {{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+<<<<<<< HEAD
 \hline \multicolumn{1}{|c|}{\textbf{Series code}} & \multicolumn{1}{c|}{\textbf{Series name}} & \multicolumn{1}{c|}{\textbf{Transformation}} & \multicolumn{1}{c|}{\textbf{Delay}} \\ \hline
+=======
+\hline \multicolumn{1}{|c|}{\textbf{First column}} & \multicolumn{1}{c|}{\textbf{Second column}} & \multicolumn{1}{c|}{\textbf{Third column}} & \multicolumn{1}{c|}{\textbf{Delay}} \\ \hline
+>>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
 \endhead
 
 \hline \multicolumn{3}{|r|}{{Continued on next page}} \\ \hline
