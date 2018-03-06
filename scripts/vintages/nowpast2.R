@@ -278,11 +278,13 @@ nowpast.error <- function(out, y, yAS, yVarQ, yVarA, yAcumAno){
   # yVarQ = pibs[,"pibVarQ"]
   # yAcumAno = pibAcumAno
   # out <- nowpastSM10
-  
+
   nivel <- out$nivel
   varQ <- out$varQ
   varA <- out$varA
   acum4 <- out$acum4
+  
+  apply(matrix(nivel), MARGIN = 2, FUN = function(x) rowSums(is.na(x)))
   
   y <- window(y, start = start(nivel), end = end(nivel), freq = 4)
   yVarQ <- window(yVarQ, start = start(nivel), end = end(nivel), freq = 4)

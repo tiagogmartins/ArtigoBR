@@ -3,8 +3,8 @@ setwd("./scripts")
 
 # base
 base <- ts(read_excel("base2000IAE3.xlsx")[,-1], start = c(2000,1), freq = 12)
- legenda <- data.frame(read_excel("base2000IAE3.xlsx", sheet = 2)  )
- delay <- legenda$delay.em.semanas.depois.do.fim.no.período*7
+legenda <- data.frame(read_excel("./vintages/legenda.xlsx"))
+delay <- legenda$delay.em.semanas.depois.do.fim.no.período*7
 # trans <- legenda$transf
 # r = p = q = 2
 # aggregate = F
