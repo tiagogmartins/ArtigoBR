@@ -15,7 +15,13 @@ legenda <- data.frame(read_excel("base2000.xlsx", sheet = 2)  )
 pib <- month2qtr(base[,"serie22099"])
 pibAS <- ts(read.csv2("pib_dessazonalizado22109.csv")[,-1], start = c(1996,1), freq = 4)
 pibVarQ <- (pibAS/lag(pibAS,-1)-1)*100
+pibVarQ2 <- pibVarQ
+window(pibVarQ2, start = c(2015,1), freq = 4) <- ts(c(-0.2,-1.9,-1.7,-1.4,-0.3,-0.6,-0.8,-0.9,1,0.2,0.1),
+                                                    start = c(2015,1), freq = 4)
 pibVarA <- (pib/lag(pib,-4)-1)*100
+pibVarA2 <- pibVarA
+window(pibVarA2, start = c(2015,1), freq = 4) <- ts(c(-1.6,-2.6,-4.5,-5.9,-5.4,-3.8,-2.9,-2.5,-0.4,0.3,1.4,2.1),
+                                                    start = c(2015,1), freq = 4)
 
 # fazer previsão do PIB toda sexta-feira do ano
 # aproximadamente 4 vezes por mês
@@ -248,25 +254,30 @@ nowpast.plot2(nowpastSM10, y = pib, yAS = pibAS, type = 2)
 nowpast.plot2(nowpastSM10, y = pib, yAS = pibAS, type = 3)
 
 
-
+# > colMeans(nowpast.error(out = nowpastSM10, y = pib, yAS = pibAS)$trimestral)
+# nivel     varQ     varA 
+# 3.334943 1.813195 2.105851 
+# > mean(nowpast.error(out = nowpastSM10, y = pib, yAS = pibAS)$acumAno)
+# [1] 0.5414346
 
 # MODELO SM10 GRÁFICOS SEPARADOS ---------------
 
+par(mfrow = c(1,3), mar = c(4,2,3,2))
 out <- nowpastSM10
 y <- pib
 yAS <- pibAS
-yVarQ <- (yAS/lag(yAS,-1)-1)*100
-yVarA <- (y/lag(y,-4)-1)*100
+yVarQ <- pibVarQ2#(yAS/lag(yAS,-1)-1)*100
+yVarA <- pibVarA2#(y/lag(y,-4)-1)*100 
 ydata <- data.frame(y, ano = as.numeric(substr(as.Date(y),1,4)))
 ydata <- ydata[ydata$ano %in% as.numeric(names(table(ydata$ano)[table(ydata$ano) == 4])),]
 yMean <- aggregate(ydata$y, by = list(ydata$ano), FUN = mean, na.rm = F)
 yMean <- ts(yMean$x, start = yMean$Group.1[1], freq = 1)
 yVarAcum <- na.omit((yMean/lag(yMean,-1)-1)*100)
 
-nivel <- out$nivel
-varQ <- out$varQ
-varA <- out$varA
-acum4 <- out$acum4
+nivel <- window(out$nivel, start = c(2015,1), freq = 4)
+varQ <- window(out$varQ, start = c(2015,1), freq = 4)
+varA <- window(out$varA, start = c(2015,1), freq = 4)
+acum4 <- window(out$acum4, start = c(2015,1), freq = 4)
 
 y <- window(y, start = start(nivel), end = end(nivel), freq = 4)
 yVarQ <- window(yVarQ, start = start(nivel), end = end(nivel), freq = 4)
@@ -280,7 +291,7 @@ names <- gsub("-10","-Q4",names)
 
 # nível
 nivel0 <- data.frame(t(window(nivel, end = end(na.omit(y)), freq = 4)))
-a <- barplot(c(na.omit(y)), ylim = c(0,200), main = "", border = "steelblue", col = "skyblue") #  names.arg = names,
+a <- barplot(c(na.omit(y)), ylim = c(0,200), main = "Nível", border = "steelblue", col = "skyblue") #  names.arg = names,
 text(a,-8,  srt = 60, adj= 1, xpd = TRUE,
      labels = names, cex=0.9)
 for(i in 1:ncol(nivel0)){
@@ -305,13 +316,14 @@ names <- gsub("-04","-Q2",names)
 names <- gsub("-07","-Q3",names)
 names <- gsub("-10","-Q4",names)
 
-varA0 <- data.frame(t(window(varA, start = start(yVarA), end = end(na.omit(y)), freq = 4)))
+varA0 <- data.frame(t(window(varA, start = start(yVarA), end = end(na.omit(yVarA)), freq = 4)))
 a <- barplot(c(na.omit(yVarA)), ylim = c(min(varA0, na.rm = T) -2, max(varA0, na.rm = T) + 2), main = "Variação Anual\n(trimestre do ano anterior)", border = "steelblue", col = "skyblue")
 text(a,-10,  srt = 60, adj= 1, xpd = TRUE, labels = names, cex=0.9)
 for(i in 1:ncol(varA0)){
   points(x = rep(a[i,1],sum(!is.na(varA0[,i]))), y = varA0[!is.na(varA0[,i]),i], type = "l", col = "#CD0000")
   points(x = a[i,1], y = varA0[max(which(!is.na(varA0[,i]))),i], pch = 19, col = "#CD0000")
 }
+
 
 # acumulado no ano
 # dataAcum <- table(substr(as.Date(acum4),1,4))

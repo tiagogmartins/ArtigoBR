@@ -275,7 +275,7 @@ nowpast.plot2 <- function(out, y, yAS, type = 1){
   options(warn=0)
 }
   
-nowpast.error <- function(out, y, yAS){
+nowpast.error <- function(out, y, yAS, yVarQ, yVarA){
   options(warn=-1)
   # y <- month2qtr(base[,"serie22099"])
   # yAS <- ts(read.csv2("pib_dessazonalizado22109.csv")[,-1], start = c(1996,1), freq = 4)
@@ -286,8 +286,8 @@ nowpast.error <- function(out, y, yAS){
   varA <- out$varA
   acum4 <- out$acum4
   
-  yVarQ <- (yAS/lag(yAS,-1)-1)*100
-  yVarA <- (y/lag(y,-4)-1)*100
+  yVarQ <- yVarQ#(yAS/lag(yAS,-1)-1)*100
+  yVarA <- yVarA#(y/lag(y,-4)-1)*100
   ydata <- data.frame(y, ano = substr(as.Date(y),1,4))
   yMean <- aggregate(ydata$y, by = list(ydata$ano), FUN = mean, na.rm = T)
   yVarAcum <- (yMean/lag(yMean,-1)-1)*100

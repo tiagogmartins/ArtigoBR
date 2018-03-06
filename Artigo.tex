@@ -13,6 +13,7 @@
 \usepackage{adjustbox}
 \usepackage{longtable}
 \usepackage{pdflscape}
+\usepackage{booktabs}
 % espaçamento duplo
 \usepackage{setspace}
 \onehalfspace 
@@ -84,15 +85,15 @@ Palavras-chave: nowcasting, PIB, dynamic factors model.
 
 \section{Introdução}\label{intro}
 
-Decisões de política monetária e investimento são tomadas com base nas condições presentes e futuras da economia mesmo quando as variáveis usadas para descrever esse estado não estão acessíveis. \textcolor{red}{falar da defasagem do PIB do Brasil}. Por conta disso, a previsão em tempo real, ou simplesmente \textit{nowcasting}, se torna um tema de relevância. 
+Decisões de política monetária e investimento são tomadas com base nas condições presentes e futuras da economia mesmo quando as variáveis usadas para descrever esse estado não estão acessíveis.Esse é particularmente o caso do PIB do Brasil que é divulgado, em média, 60 dias após o trimestre de referência. Por conta disso, a previsão em tempo real, ou simplesmente \textit{nowcasting}, se torna um tema de relevância.
 
-Os métodos de previsão em tempo real, que se desenvolveram nas últimas décadas, são baseados em modelos de fatores dinâmicos (DFM) e dependem de algum poder computacional para lidar com uma grande quantidade de dados. Veja \cite{stockwatson2006} para uma revisão a respeito dessa literatura. 
- 
+Os métodos de previsão em tempo real, que se desenvolveram nas últimas décadas, são baseados em modelos de fatores dinâmicos (DFM) e dependem de algum poder computacional para lidar com uma grande quantidade de dados. Veja \cite{stockwatson2006} para uma revisão a respeito dessa literatura.
+
 O termo nowcasting é cunhado em \cite{giannoneetal2008} e definido como a previsão do presente, do passado recente ou do futuro próximo. Neste artigo, os autores mostram como reduzir em apenas dois fatores dinâmicos a informação contida em dezenas de séries temporais mensais com o intuito de explicar o PIB (dos Estados Unidos) de curto prazo dos trimestres cuja informação ainda não está disponível. Após esse estudo, muitos outros continuaram explorando o uso de DFM na previsão em tempo real, como por exemplo \cite{banburarunstler2011} e \cite{banburaetal2011}. No primeiro os autores fazem uma análise mostrando como a divulgação de certas variáveis influenciam na atualização da previsão do PIB. Além disso, os autores também propõem uma medida mensal para a variável trimestral, uma vez que os fatores extraídos são mensais. No segundo, os autores propõem estimar o modelo via outro método (Expectation Maximization) e não mais por dois estágios como se fazia em \cite{giannoneetal2008}.
 
 O objetivo do artigo é encontrar um modelo de previsão para o PIB do Brasil segundo as propostas desenvolvidas nos artigos do parágrafo anterior. Para disseminar o uso da metodologia e reproduzir esse trabalho, desenvolveu-se o pacote \texttt{nowcasting} no \textsf{R} com tais métodos e algumas outras ferramentas que facilitam o tratamento de séries temporais para tal uso e que permitem analisar a importância de cada variável numa previsão. As funções de estimação foram apenas traduzidas para a linguagem, uma vez que \cite{giannoneetal2008} e \cite{banburaetal2011} forneceram os códigos em \textsf{Matlab}.
 
-A estrutura do artigo é a seguinte: na seção \ref{metodo} são apresentados o arcabouço teórico sobre modelos de fatores dinâmicos, os métodos de estimação e a base de dados; na seção \ref{nowcastingBR} tem-se os resultados da aplicação metodológica, a análise dos resultados e previsão extendida para o PIB do Brasil no ano de 2018. Por fim, na seção \ref{conclusao}, têm-se as considerações finais. Embora todo o contexto apresentado aqui seja referente ao PIB, a metodologia pode ser aplicada a outras séries temporais. 
+A estrutura do artigo é a seguinte: na seção \ref{metodo} são apresentados o arcabouço teórico sobre modelos de fatores dinâmicos, os métodos de estimação e a base de dados; na seção \ref{nowcastingBR} tem-se os resultados da aplicação metodológica, a análise dos resultados e previsão extendida para o PIB do Brasil no ano de 2018. Por fim, na seção \ref{conclusao}, têm-se as considerações finais. Embora todo o contexto apresentado aqui seja referente ao PIB, a metodologia pode ser aplicada a outras séries temporais.
 
 \section{Metodologia}\label{metodo}
 
@@ -218,9 +219,9 @@ No segundo estágio, utiliza-se Kalman smoothing para reestimar os fatores para 
 Nesse contexto, duas opções podem ser consideradas ao estimar os fatores:
 
 \begin{itemize}
-\item \textit{quarterly factors}: as variáveis explicativas mensais podem ser transformadas para representarem quantidades trimestrais seguindo o procedimento visto na seção \ref{m2q}. Portanto, os fatores embora mensais também representarão quantidades trimestrais e, consequentemente, poderão ser transformados em variáveis de periodicidade trimestral, e assim a equação (\ref{reg}) pode ser estimada para a previsão da variável resposta.
+\item \textit{quarterly factors}: as variáveis explicativas mensais podem ser transformadas para representarem quantidades trimestrais seguindo o procedimento visto na seção \ref{variaveisQM}. Portanto, os fatores embora mensais também representarão quantidades trimestrais e, consequentemente, poderão ser transformados em variáveis de periodicidade trimestral, e assim a equação (\ref{reg}) pode ser estimada para a previsão da variável resposta.
 
-\item \textit{monthly factors}: outra opção é estimar os fatores sobre as variáveis originais e ao final aplicar a transformação vista na seção \ref{m2q} aos fatores para que representem quantidades trimestrais. Em seguida cria-se a variável de periodicidade trimestral que será usada para a previsão da variável resposta em (\ref{reg}).
+\item \textit{monthly factors}: outra opção é estimar os fatores sobre as variáveis originais e ao final aplicar a transformação vista na seção \ref{variaveisQM} aos fatores para que representem quantidades trimestrais. Em seguida cria-se a variável de periodicidade trimestral que será usada para a previsão da variável resposta em (\ref{reg}).
 \end{itemize}
 
 
@@ -295,23 +296,22 @@ O algoritmo então converge até que os parâmetros sejam iguais nas iterações
 \subsection{Base de dados}\label{base}
 
 % Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
+
 \begin{landscape}
 \begin{center}
 \begin{longtable}{|l|l|l|l|}
 
-\caption{Data base.} \label{tab:long} \\
+\caption{Data base.}\label{tab:long} \\
 
 \hline \multicolumn{1}{|c|}{\textbf{Series code}} & \multicolumn{1}{c|}{\textbf{Series name}} & \multicolumn{1}{c|}{\textbf{Transformation}} & \multicolumn{1}{c|}{\textbf{Delay}} \\ \hline
 \endfirsthead
 
 \multicolumn{3}{c}%
 {{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
-<<<<<<< HEAD
+ % <<<<<<< HEAD
 \hline \multicolumn{1}{|c|}{\textbf{Series code}} & \multicolumn{1}{c|}{\textbf{Series name}} & \multicolumn{1}{c|}{\textbf{Transformation}} & \multicolumn{1}{c|}{\textbf{Delay}} \\ \hline
-=======
-\hline \multicolumn{1}{|c|}{\textbf{First column}} & \multicolumn{1}{c|}{\textbf{Second column}} & \multicolumn{1}{c|}{\textbf{Third column}} & \multicolumn{1}{c|}{\textbf{Delay}} \\ \hline
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
+ % =======
+% >>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
 \endhead
 
 \hline \multicolumn{3}{|r|}{{Continued on next page}} \\ \hline
@@ -333,58 +333,58 @@ serie432 & Interest rate- Selic target & 1 & 0 \\
 serie433 & Broad National Consumer Price Index (IPCA) & 4 & 7 \\
 serie1178 & Interest rate- Selic in annual terms (basis 252) & 4 & 0 \\
 serie1344 & Installed capacity utilization- General(FGV) & 3 & 0 \\
-serie1373 & vehicle production (total) & 3 & 14 \\
-serie1374 & passenger cars and light commercial vehicles production & 3 & 14 \\
-serie1375 & truck production & 3 & 14 \\
-serie1376 & bus production & 3 & 14 \\
-serie1377 & motorcycle production & 3 & 14 \\
-serie1378 & vehicle sales (total) & 3 & 14 \\
-serie1379 & domestic vehicle sales & 3 & 14 \\
-serie1380 & vehicle exports & 3 & 14 \\
-serie1382 & productions of mechanised cultivators & 4 & 14 \\
-serie1383 & four wheel tractor production & 3 & 14 \\
-serie1384 & track driven tractor production & 3 & 14 \\
-serie1385 & production of combined harvesters & 3 & 14 \\
-serie1386 & production of mechanical diggers & 3 & 14 \\
-serie1387 & other agricultural machinery & 3 & 14 \\
-serie1388 & production of agricultural machinery (total) & 3 & 14 \\
-serie1389 & petroleum derivatives production- crude oil & 1 & 42 \\
-serie1390 & petroleum derivatives production- LGN & 1 & 42 \\
-serie1391 & petroleum derivatives production- total & 1 & 42 \\
-serie1392 & petroleum derivatives production- natural gas & 1 & 42 \\
-serie1402 & electric energy consumption- Brazil- commercial & 3 & 42 \\
-serie1403 & electric energy consumption- Brazil- residential & 3 & 42 \\
-serie1404 & eletric energy consumption- Brazil- industrial & 3 & 42 \\
-serie1405 & eletric energy consumption- Brazil- other & 3 & 42 \\
-serie1406 & eletric energy consumption- Brazil- total & 3 & 42 \\
+serie1373 & Vehicle production (total) & 3 & 14 \\
+serie1374 & Passenger cars and light commercial vehicles production & 3 & 14 \\
+serie1375 & Truck production & 3 & 14 \\
+serie1376 & Bus production & 3 & 14 \\
+serie1377 & Motorcycle production & 3 & 14 \\
+serie1378 & Vehicle sales (total) & 3 & 14 \\
+serie1379 & Domestic vehicle sales & 3 & 14 \\
+serie1380 & Vehicle exports & 3 & 14 \\
+serie1382 & Productions of mechanised cultivators & 4 & 14 \\
+serie1383 & Four wheel tractor production & 3 & 14 \\
+serie1384 & Track driven tractor production & 3 & 14 \\
+serie1385 & Production of combined harvesters & 3 & 14 \\
+serie1386 & Production of mechanical diggers & 3 & 14 \\
+serie1387 & Other agricultural machinery & 3 & 14 \\
+serie1388 & Production of agricultural machinery (total) & 3 & 14 \\
+serie1389 & Petroleum derivatives production- crude oil & 1 & 42 \\
+serie1390 & Petroleum derivatives production- LGN & 1 & 42 \\
+serie1391 & Petroleum derivatives production- total & 1 & 42 \\
+serie1392 & Petroleum derivatives production- natural gas & 1 & 42 \\
+serie1402 & Electric energy consumption- Brazil- commercial & 3 & 42 \\
+serie1403 & Electric energy consumption- Brazil- residential & 3 & 42 \\
+serie1404 & Eletric energy consumption- Brazil- industrial & 3 & 42 \\
+serie1405 & Eletric energy consumption- Brazil- other & 3 & 42 \\
+serie1406 & Eletric energy consumption- Brazil- total & 3 & 42 \\
 serie1453 & Credit sales Index & 3 & 21 \\
 serie1454 & Cash Sales Index & 3 & 21 \\
-serie1455 & sales volume index in the retail sector- Total- Brazil & 3 & 70 \\
-serie1483 & sales volume index in the retail sector- Fuel and lubricants- Brazil & 3 & 70 \\
-serie1496 & sales volume index in the retail sector- Hypermarkets, supermarket, food, beverages and tobacco- Brazil & 3 & 70 \\
-serie1509 & sales volume index in the retail sector- Textiles, Clothing and Footwear- Brazil & 3 & 70 \\
-serie1522 & sales volume index in the retail sector- Furniture and white goods- Brazil & 3 & 70 \\
-serie1548 & sales volume index in the retail sector- Vehicles and motorcycles, spare parts- Brazil & 3 & 70 \\
-serie1561 & sales volume index in the retail sector- Hypermarkets, supermarket- Brazil & 3 & 70 \\
+serie1455 & Sales volume index in the retail sector- Total- Brazil & 3 & 70 \\
+serie1483 & Sales volume index in the retail sector- Fuel and lubricants- Brazil & 3 & 70 \\
+serie1496 & Sales volume index in the retail sector- Hypermarkets, supermarket, food, beverages and tobacco- Brazil & 3 & 70 \\
+serie1522 & Sales volume index in the retail sector- Furniture and white goods- Brazil & 3 & 70 \\
+serie1509 & Sales volume index in the retail sector- Textiles, Clothing and Footwear- Brazil & 3 & 70 \\
+serie1548 & Sales volume index in the retail sector- Vehicles and motorcycles, spare parts- Brazil & 3 & 70 \\
+serie1561 & Sales volume index in the retail sector- Hypermarkets, supermarket- Brazil & 3 & 70 \\
 serie2053 & Net public debt- Balances in c.m.u. (million) - Total- Federal Government and Banco Central & 1 & 35 \\
 serie2057 & Net public debt- Balances in c.m.u. (million) - Total- State governments & 1 & 35 \\
 serie2058 & Net public debt- Balances in c.m.u. (million) - Total- Municipal governments & 1 & 35 \\
 serie4393 & Consumer confidence index & 3 & 14 \\
 serie4394 & Current economic conditions index & 3 & 14 \\
-serie4395 & future expectations index & 1 & 14 \\
-serie4503 & net public debt (\%GDP)- total- Federal Government and Banco Central & 2 & 35 \\
-serie4506 & net public debt (\% GDP)- Total- State and municipal governments & 2 & 35 \\
-serie4507 & net public debt (\%GDP)- total- State governments & 2 & 35 \\
-serie4508 & net public debt (\% GDP)- total- Municipal governments & 2 & 35 \\
-serie4509 & net public debt (\%GDP)- total- State enterprises & 2 & 35 \\
-serie4513 & net public debt(\%GDP)- total- consolidated public sector & 2 & 35 \\
+serie4395 & Future expectations index & 1 & 14 \\
+serie4503 & Net public debt (\%GDP)- total- Federal Government and Banco Central & 2 & 35 \\
+serie4506 & Net public debt (\% GDP)- Total- State and municipal governments & 2 & 35 \\
+serie4507 & Net public debt (\%GDP)- total- State governments & 2 & 35 \\
+serie4508 & Net public debt (\% GDP)- total- Municipal governments & 2 & 35 \\
+serie4509 & Net public debt (\%GDP)- total- State enterprises & 2 & 35 \\
+serie4513 & Net public debt(\%GDP)- total- consolidated public sector & 2 & 35 \\
 serie7341 & Business confidence index- General & 1 & 0 \\
-serie7357 & steel production (1992= 100) & 3 & 42 \\
-serie7384 & sales of factory authorized vehicle outlets- Passenger cars sales & 3 & 7 \\
-serie7385 & sales of factory authorized vehicle outlets- Light commercial cars sales & 3 & 7 \\
-serie7386 & sales of factory authorized vehicle outlets- Truck sales & 3 & 7 \\
-serie7412 & balanced checks - in 1000 & 3 & 98 \\
-serie7413 & returned checks - in 1000 & 3 & 98 \\
+serie7357 & Steel production (1992= 100) & 3 & 42 \\
+serie7384 & Sales of factory authorized vehicle outlets- Passenger cars sales & 3 & 7 \\
+serie7385 & Sales of factory authorized vehicle outlets- Light commercial cars sales & 3 & 7 \\
+serie7386 & Sales of factory authorized vehicle outlets- Truck sales & 3 & 7 \\
+serie7412 & Balanced checks - in 1000 & 3 & 98 \\
+serie7413 & Returned checks - in 1000 & 3 & 98 \\
 serie7415 & BNDES system disbursements- Total & 3 & 21 \\
 serie7416 & BNDES system disbursements- Manufacturing industry & 3 & 21 \\
 serie7417 & BNDES system disbursements- Commerce and Services & 3 & 21 \\
@@ -431,13 +431,13 @@ serie22704 & Balance on goods and services - monthly - net & 3 & 21 \\
 serie22705 & Balance on goods and services - monthly - credit & 3 & 21 \\
 serie22706 & Balance on goods and services - monthly - debit & 3 & 21 \\
 serie22707 & Balance on goods- Balance of Payments - monthly- net & 3 & 21 \\
-serie24352 & capacity utilization- manufacturing industry (FGV) & 1 & 21 \\
-serie24369 & unemployment - PNAD & 3 & 28 \\
+serie24352 & Capacity utilization- manufacturing industry (FGV) & 1 & 21 \\
+serie24369 & Enemployment - PNAD & 3 & 28 \\
 serie24370 & Working age populaton - Continuous PNAD & 1 & 28 \\
 serie24378 & Labor force population - Continuous PNAD & 1 & 28 \\
-serie24379 & employed population - Continuous PNAD & 3 & 28 \\
-serie24382 & real habitually average earnings of employed people- Continuous PNAD & 1 & 28 \\
-serie25241 & registered employees Index - Manufacturing & 3 & 28 \\
+serie24379 & Employed population - Continuous PNAD & 3 & 28 \\
+serie24382 & Real habitually average earnings of employed people- Continuous PNAD & 1 & 28 \\
+serie25241 & Registered employees Index - Manufacturing & 3 & 28 \\
 ICI & ICI with seasonal adjust - Industry confidence index & 1 & 0 \\
 ISA & ISA with seasonal adjust - Industry confidence index - Actual situation & 1 & 0 \\
 IE & IE with seasonal adjust - Industry confidence index - Expectation & 1 & 0 \\
@@ -446,7 +446,7 @@ ISACOM & ISA-COM with seasonal adjust-Retail sector extended actual situtation i
 IECOM & IE-COM with seasonal adjust-Retail sector extended expected index & 1 & 0 \\
 ICS & ICS with seasonal adjust - Service confidence index & 1 & 0 \\
 ISAS & ISA-S with seasonal adjust - Service confidence index- Actual situation & 1 & 0 \\
-IES & IE-S with seasonal adjust - Service confidence index- Expectiation & 1 & 0 \\ 
+IES & IE-S with seasonal adjust - Service confidence index- Expectiation & 1 & 0 \\
 
 \end{longtable}
 \end{center}

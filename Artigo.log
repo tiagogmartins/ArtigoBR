@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.3.1)  1 MAR 2018 15:35
-=======
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.3.1)  1 MAR 2018 15:17
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.3.1)  5 MAR 2018 10:09
 entering extended mode
 **./Artigo.tex
 (Artigo.tex
@@ -507,6 +503,27 @@ Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 )
+(C:\Users\tiago.martins\AppData\Roaming\MiKTeX\2.9\tex\latex\booktabs\booktabs.
+sty
+Package: booktabs 2005/04/14 v1.61803 publication quality tables
+\heavyrulewidth=\dimen125
+\lightrulewidth=\dimen126
+\cmidrulewidth=\dimen127
+\belowrulesep=\dimen128
+\belowbottomsep=\dimen129
+\aboverulesep=\dimen130
+\abovetopsep=\dimen131
+\cmidrulesep=\dimen132
+\cmidrulekern=\dimen133
+\defaultaddspace=\dimen134
+\@cmidla=\count99
+\@cmidlb=\count100
+\@aboverulesep=\dimen135
+\@belowrulesep=\dimen136
+\@thisruleclass=\count101
+\@lastruleclass=\count102
+\@thisrulewidth=\dimen137
+)
 (C:\Users\tiago.martins\AppData\Roaming\MiKTeX\2.9\tex\latex\setspace\setspace.
 sty
 Package: setspace 2011/12/19 v6.7a set line spacing
@@ -562,16 +579,16 @@ Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 )
-\@linkdim=\dimen125
-\Hy@linkcounter=\count99
-\Hy@pagecounter=\count100
+\@linkdim=\dimen138
+\Hy@linkcounter=\count103
+\Hy@pagecounter=\count104
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def"
 File: pd1enc.def 2017/03/14 v6.85a Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count101
+\Hy@SavedSpaceFactor=\count105
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg"
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -583,17 +600,17 @@ Package hyperref Info: Plain pages OFF on input line 4513.
 Package hyperref Info: Backreferencing OFF on input line 4518.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4751.
-\c@Hy@tempcnt=\count102
+\c@Hy@tempcnt=\count106
 
 (C:\Users\tiago.martins\AppData\Roaming\MiKTeX\2.9\tex\latex\url\url.sty
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5104.
-\XeTeXLinkMargin=\dimen126
-\Fld@menulength=\count103
-\Field@Width=\dimen127
-\Fld@charsize=\dimen128
+\XeTeXLinkMargin=\dimen139
+\Fld@menulength=\count107
+\Field@Width=\dimen140
+\Fld@charsize=\dimen141
 Package hyperref Info: Hyper figures OFF on input line 6358.
 Package hyperref Info: Link nesting OFF on input line 6363.
 Package hyperref Info: Hyper index ON on input line 6366.
@@ -603,17 +620,17 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6383.
 Package hyperref Info: PDF/A mode OFF on input line 6388.
 LaTeX Info: Redefining \ref on input line 6428.
 LaTeX Info: Redefining \pageref on input line 6432.
-\Hy@abspage=\count104
-\c@Item=\count105
-\c@Hfootnote=\count106
+\Hy@abspage=\count108
+\c@Item=\count109
+\c@Hfootnote=\count110
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hpdftex.def"
 File: hpdftex.def 2017/03/14 v6.85a Hyperref driver for pdfTeX
-\Fld@listcount=\count107
-\c@bookmark@seq@number=\count108
+\Fld@listcount=\count111
+\c@bookmark@seq@number=\count112
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty"
 Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
@@ -622,14 +639,14 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip47
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 41.
+Package hyperref Info: Option `colorlinks' set `true' on input line 42.
 
 (C:\Users\tiago.martins\AppData\Roaming\MiKTeX\2.9\tex\latex\natbib\natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip48
 \bibsep=\skip49
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count109
+\c@NAT@ctr=\count113
 ) ("C:\Program Files\MiKTeX 2.9\tex\latex\tools\indentfirst.sty"
 Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
 )
@@ -639,11 +656,11 @@ Package: fancyvrb 2008/02/07
 
 Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
 <2008/02/07> (tvz)
-\FV@CodeLineNo=\count110
+\FV@CodeLineNo=\count114
 \FV@InFile=\read1
 \FV@TabBox=\box32
-\c@FancyVerbLine=\count111
-\FV@StepNumber=\count112
+\c@FancyVerbLine=\count115
+\FV@StepNumber=\count116
 \FV@OutFile=\write3
 )
 (C:\Users\tiago.martins\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\subcaption
@@ -658,15 +675,15 @@ Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
 ty
 Package: caption3 2016/05/22 v1.7-166 caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 67.
-\captionmargin=\dimen129
-\captionmargin@=\dimen130
-\captionwidth=\dimen131
-\caption@tempdima=\dimen132
-\caption@indent=\dimen133
-\caption@parindent=\dimen134
-\caption@hangindent=\dimen135
+\captionmargin=\dimen142
+\captionmargin@=\dimen143
+\captionwidth=\dimen144
+\caption@tempdima=\dimen145
+\caption@indent=\dimen146
+\caption@parindent=\dimen147
+\caption@hangindent=\dimen148
 )
-\c@ContinuedFloat=\count113
+\c@ContinuedFloat=\count117
 Package caption Info: hyperref package is loaded.
 Package caption Info: longtable package is loaded.
 
@@ -674,29 +691,8 @@ Package caption Info: longtable package is loaded.
 sty
 Package: ltcaption 2013/06/09 v1.4-94 longtable captions (AR)
 ))
-\c@subfigure=\count114
-\c@subtable=\count115
-)
-(C:\Users\tiago.martins\AppData\Roaming\MiKTeX\2.9\tex\latex\booktabs\booktabs.
-sty
-Package: booktabs 2005/04/14 v1.61803 publication quality tables
-\heavyrulewidth=\dimen136
-\lightrulewidth=\dimen137
-\cmidrulewidth=\dimen138
-\belowrulesep=\dimen139
-\belowbottomsep=\dimen140
-\aboverulesep=\dimen141
-\abovetopsep=\dimen142
-\cmidrulesep=\dimen143
-\cmidrulekern=\dimen144
-\defaultaddspace=\dimen145
-\@cmidla=\count116
-\@cmidlb=\count117
-\@aboverulesep=\dimen146
-\@belowrulesep=\dimen147
-\@thisruleclass=\count118
-\@lastruleclass=\count119
-\@thisrulewidth=\dimen148
+\c@subfigure=\count118
+\c@subtable=\count119
 )
 (C:\Users\tiago.martins\AppData\Roaming\MiKTeX\2.9\tex\latex\threeparttable\thr
 eeparttable.sty
@@ -1160,27 +1156,27 @@ File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 )))) (Artigo.aux)
 \openout1 = `Artigo.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 71.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 71.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 72.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 72.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    ... okay on input line 72.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1245,7 +1241,7 @@ G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
 \AtBeginShipoutBox=\box55
-Package hyperref Info: Link coloring ON on input line 71.
+Package hyperref Info: Link coloring ON on input line 72.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -1255,9 +1251,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count294
 )
-LaTeX Info: Redefining \ref on input line 71.
-LaTeX Info: Redefining \pageref on input line 71.
-LaTeX Info: Redefining \nameref on input line 71.
+LaTeX Info: Redefining \ref on input line 72.
+LaTeX Info: Redefining \pageref on input line 72.
+LaTeX Info: Redefining \nameref on input line 72.
 
 (Artigo.out) (Artigo.out)
 \@outlinefile=\write4
@@ -1268,234 +1264,176 @@ Package caption Info: threeparttable package is loaded.
 Package caption Info: End \AtBeginDocument code.
  (Artigo-concordance.tex)
 
-Package hyperref Warning: Ignoring empty anchor on input line 82.
+Package hyperref Warning: Ignoring empty anchor on input line 83.
 
-LaTeX Font Info:    Try loading font information for T1+aess on input line 82.
+LaTeX Font Info:    Try loading font information for T1+aess on input line 83.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\ae\t1aess.fd"
 File: t1aess.fd 1997/11/16 Font definitions for T1/aess.
 )
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 85.
-LaTeX Font Info:    Try loading font information for T1+aett on input line 93.
+(babel)             in language  on input line 86.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 94.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\ae\t1aett.fd"
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 94.
+(babel)             in language  on input line 95.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 94.
+(babel)             in language  on input line 95.
  [1
 
 {C:/Users/tiago.martins/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 97.
+(babel)             in language  on input line 98.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 99.
+(babel)             in language  on input line 100.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 154.
+(babel)             in language  on input line 155.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 154.
+(babel)             in language  on input line 155.
  [2]
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 173.
+(babel)             in language  on input line 174.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 195.
+(babel)             in language  on input line 196.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 206.
+(babel)             in language  on input line 207.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 206.
+(babel)             in language  on input line 207.
  [3]
-LaTeX Font Info:    Try loading font information for TS1+aer on input line 221.
+LaTeX Font Info:    Try loading font information for TS1+aer on input line 222.
 
 
 (C:/Users/tiago.martins/Desktop/R-3.4.3/share/texmf/tex/latex\ts1aer.fd
 File: ts1aer.fd 
 )
 LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <10> not available
-(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 221.
-
-
-LaTeX Warning: Reference `m2q' on page 4 undefined on input line 221.
-
-
-LaTeX Warning: Reference `m2q' on page 4 undefined on input line 223.
-
+(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 222.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 253.
+(babel)             in language  on input line 254.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 253.
+(babel)             in language  on input line 254.
+
 [4]
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 295.
+(babel)             in language  on input line 296.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 299.
+(babel)             in language  on input line 300.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 299.
+(babel)             in language  on input line 300.
  [5]
-<<<<<<< HEAD
-Overfull \hbox (41.46786pt too wide) in alignment at lines 301--306
-=======
-Overfull \hbox (49.81805pt too wide) in alignment at lines 301--306
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
+Overfull \hbox (43.07785pt too wide) in alignment at lines 302--307
  [] [] [] [] 
  []
 
 
-<<<<<<< HEAD
-Overfull \hbox (41.46786pt too wide) in alignment at lines 306--311
-=======
-Overfull \hbox (49.81805pt too wide) in alignment at lines 306--311
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
+Overfull \hbox (43.07785pt too wide) in alignment at lines 307--315
  [] [] [] [] 
  []
 
 
-<<<<<<< HEAD
-Overfull \hbox (41.46786pt too wide) in alignment at lines 311--314
-=======
-Overfull \hbox (49.81805pt too wide) in alignment at lines 311--314
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
+Overfull \hbox (43.07785pt too wide) in alignment at lines 315--318
  [] [] [] [] 
  []
 
 
-<<<<<<< HEAD
-Overfull \hbox (41.46786pt too wide) in alignment at lines 314--317
-=======
-Overfull \hbox (49.81805pt too wide) in alignment at lines 314--317
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
+Overfull \hbox (43.07785pt too wide) in alignment at lines 318--321
  [] [] [] [] 
  []
 
 
-<<<<<<< HEAD
-Overfull \hbox (41.46786pt too wide) in alignment at lines 317--339
-=======
-Overfull \hbox (49.81805pt too wide) in alignment at lines 317--339
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
+Overfull \hbox (43.07785pt too wide) in alignment at lines 321--343
  [] [] [] [] 
  []
 
 
-<<<<<<< HEAD
-Overfull \hbox (41.46786pt too wide) in alignment at lines 339--359
-=======
-Overfull \hbox (49.81805pt too wide) in alignment at lines 339--359
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
+Overfull \hbox (43.07785pt too wide) in alignment at lines 343--363
  [] [] [] [] 
  []
 
 
-<<<<<<< HEAD
-Overfull \hbox (41.46786pt too wide) in alignment at lines 359--379
-=======
-Overfull \hbox (49.81805pt too wide) in alignment at lines 359--379
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
+Overfull \hbox (43.07785pt too wide) in alignment at lines 363--383
  [] [] [] [] 
  []
 
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 379.
+(babel)             in language  on input line 383.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 379.
+(babel)             in language  on input line 383.
 [6
 
 ]
-<<<<<<< HEAD
-Overfull \hbox (41.46786pt too wide) in alignment at lines 379--399
-=======
-Overfull \hbox (49.81805pt too wide) in alignment at lines 379--399
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
+Overfull \hbox (43.07785pt too wide) in alignment at lines 383--403
  [] [] [] [] 
  []
 
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 399.
+(babel)             in language  on input line 403.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 399.
+(babel)             in language  on input line 403.
 [7]
-<<<<<<< HEAD
-Overfull \hbox (41.46786pt too wide) in alignment at lines 399--419
-=======
-Overfull \hbox (49.81805pt too wide) in alignment at lines 399--419
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
+Overfull \hbox (43.07785pt too wide) in alignment at lines 403--423
  [] [] [] [] 
  []
 
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 419.
+(babel)             in language  on input line 423.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 419.
+(babel)             in language  on input line 423.
 [8]
-<<<<<<< HEAD
-Overfull \hbox (41.46786pt too wide) in alignment at lines 419--439
-=======
-Overfull \hbox (49.81805pt too wide) in alignment at lines 419--439
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
+Overfull \hbox (43.07785pt too wide) in alignment at lines 423--443
  [] [] [] [] 
  []
 
 
-<<<<<<< HEAD
-Overfull \hbox (41.46786pt too wide) in alignment at lines 439--447
-=======
-Overfull \hbox (49.81805pt too wide) in alignment at lines 439--447
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
+Overfull \hbox (43.07785pt too wide) in alignment at lines 443--451
  [] [] [] [] 
  []
 
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 447.
+(babel)             in language  on input line 451.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 447.
+(babel)             in language  on input line 451.
 [9]
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 449.
+(babel)             in language  on input line 453.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 449.
+(babel)             in language  on input line 453.
  [10]
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 452.
+(babel)             in language  on input line 456.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 464.
+(babel)             in language  on input line 468.
  (Artigo.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 470.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 474.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 470.
+(babel)             in language  on input line 474.
 Package babel Info: Redefining portuges shorthand "|
-(babel)             in language  on input line 470.
+(babel)             in language  on input line 474.
  [11
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 470.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 474.
  (Artigo.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 470.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 470.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 474.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 474.
 Package rerunfilecheck Info: File `Artigo.out' has not changed.
 (rerunfilecheck)             Checksum: 12658E7767A92E8264F15A3248C925AD;517.
-
-
-LaTeX Warning: There were undefined references.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 470.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 474.
  )
 (\end occurred inside a group at level 1)
 
-### semi simple group (level 1) entered at line 18 (\begingroup)
+### semi simple group (level 1) entered at line 19 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 19679 strings out of 493312
- 346303 string characters out of 3138876
-<<<<<<< HEAD
- 457161 words of memory out of 3000000
-=======
- 457162 words of memory out of 3000000
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
- 22892 multiletter control sequences out of 15000+200000
+ 19678 strings out of 493312
+ 346298 string characters out of 3138876
+ 457169 words of memory out of 3000000
+ 22891 multiletter control sequences out of 15000+200000
  570619 words of font info for 93 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 59i,9n,94p,10359b,11270s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 59i,9n,94p,10359b,11229s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\tiago.martins\AppData\Local\MiKTeX\2.9\fonts\pk\ljfo
 ur\jknappen\ec\dpi600\tcrm1000.pk><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
 ic/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
@@ -1515,13 +1453,9 @@ KTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/
 fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
 e1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
 c/amsfonts/cm/cmtt10.pfb>
-<<<<<<< HEAD
-Output written on Artigo.pdf (11 pages, 273416 bytes).
-=======
-Output written on Artigo.pdf (11 pages, 273837 bytes).
->>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
+Output written on Artigo.pdf (11 pages, 273604 bytes).
 PDF statistics:
- 244 PDF objects out of 1000 (max. 8388607)
+ 246 PDF objects out of 1000 (max. 8388607)
  46 named destinations out of 1000 (max. 500000)
  69 words of extra memory for PDF output out of 10000 (max. 10000000)
 
