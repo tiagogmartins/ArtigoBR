@@ -8,6 +8,8 @@ source('./scripts/vintages/nowpast2.R', encoding = 'UTF-8')
 
 # base
 legenda <- data.frame(read_excel("./scripts/vintages/legenda.xlsx"))
+pibs <- ts(read.csv2("./scripts/vintages/primeira_vintage_PIB.csv")[,-1], start = c(1996,1), freq = 4)
+pibAcum <- ts(as.numeric(as.character(read.csv2("./scripts/vintages/PIB_AcumuladoAno.csv")[,-1])), start = c(1996), freq = 1)
 
 # fazer previsão do PIB toda sexta-feira do ano
 # aproximadamente 4 vezes por mês
@@ -15,83 +17,128 @@ legenda <- data.frame(read_excel("./scripts/vintages/legenda.xlsx"))
 
 datas <- seq.Date(as.Date("2014-11-07"),as.Date("2017-12-31"), by = 7)
            
- nowpastSM1 <- nowpast(datas = datas,  delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
-                     r = 1, p = 1, q = 1, aggregate = F, method = "2sm")
-nowpastSM2 <- nowpast(datas = datas,  delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
-                    r = 2, p = 2, q = 1, aggregate = F, method = "2sm")
-nowpastSM3 <- nowpast(datas = datas, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
-                    r = 3, p = 3, q = 1, aggregate = F, method = "2sm")
-nowpastSM4 <- nowpast(datas = datas,  delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
-                    r = 2, p = 1, q = 2, aggregate = F, method = "2sm")
-nowpastSM5 <- nowpast(datas = datas,  delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
-                    r = 3, p = 1, q = 3, aggregate = F, method = "2sm")
-nowpastSM6 <- nowpast(datas = datas, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
-                     r = 3, p = 1, q = 2, aggregate = F, method = "2sm")
-nowpastSM7 <- nowpast(datas = datas,  delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
-                     r = 3, p = 1, q = 1, aggregate = F, method = "2sm")
-nowpastSM8 <- nowpast(datas = datas, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
-                     r = 3, p = 2, q = 2, aggregate = F, method = "2sm")
-nowpastSM9 <- nowpast(datas = datas,  delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
-                     r = 3, p = 3, q = 3, aggregate = F, method = "2sm")
-nowpastSM10 <- nowpast(datas = datas, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
-                     r = 2, p = 2, q = 2, aggregate = F, method = "2sm")
-nowpastSM11 <- nowpast(datas = datas, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
-                     r = 2, p = 1, q = 1, aggregate = F, method = "2sm")
+# nowpastSM1 <- nowpast(datas = datas,  delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf, 
+#                       r = 1, p = 1, q = 1, aggregate = F, method = "2sm")
+# nowpastSM2 <- nowpast(datas = datas,  delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
+#                       r = 2, p = 2, q = 1, aggregate = F, method = "2sm")
+# nowpastSM3 <- nowpast(datas = datas, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
+#                       r = 3, p = 3, q = 1, aggregate = F, method = "2sm")
+# nowpastSM4 <- nowpast(datas = datas,  delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
+#                       r = 2, p = 1, q = 2, aggregate = F, method = "2sm")
+# nowpastSM5 <- nowpast(datas = datas,  delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
+#                       r = 3, p = 1, q = 3, aggregate = F, method = "2sm")
+# nowpastSM6 <- nowpast(datas = datas, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
+#                       r = 3, p = 1, q = 2, aggregate = F, method = "2sm")
+# nowpastSM7 <- nowpast(datas = datas,  delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
+#                       r = 3, p = 1, q = 1, aggregate = F, method = "2sm")
+# nowpastSM8 <- nowpast(datas = datas, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
+#                       r = 3, p = 2, q = 2, aggregate = F, method = "2sm")
+# nowpastSM9 <- nowpast(datas = datas,  delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
+#                       r = 3, p = 3, q = 3, aggregate = F, method = "2sm")
+# nowpastSM10 <- nowpast(datas = datas, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
+#                        r = 2, p = 2, q = 2, aggregate = F, method = "2sm")
+# nowpastSM11 <- nowpast(datas = datas, delay = legenda$delay.em.semanas.depois.do.fim.no.período*7, trans = legenda$transf,
+#                        r = 2, p = 1, q = 1, aggregate = F, method = "2sm")
+# 
+# saveRDS(nowpastSM1,"./scripts/vintages/nowpastSM1IAE4.rds")
+# saveRDS(nowpastSM2,"./scripts/vintages/nowpastSM2IAE4.rds")
+# saveRDS(nowpastSM3,"./scripts/vintages/nowpastSM3IAE4.rds")
+# saveRDS(nowpastSM4,"./scripts/vintages/nowpastSM4IAE4.rds")
+# saveRDS(nowpastSM5,"./scripts/vintages/nowpastSM5IAE4.rds")
+# saveRDS(nowpastSM6,"./scripts/vintages/nowpastSM6IAE4.rds")
+# saveRDS(nowpastSM7,"./scripts/vintages/nowpastSM7IAE4.rds")
+# saveRDS(nowpastSM8,"./scripts/vintages/nowpastSM8IAE4.rds")
+# saveRDS(nowpastSM9,"./scripts/vintages/nowpastSM9IAE4.rds")
+# saveRDS(nowpastSM10,"./scripts/vintages/nowpastSM10IAE4.rds")
+# saveRDS(nowpastSM11,"./scripts/vintages/nowpastSM11IAE4.rds")
 
-
-
- saveRDS(nowpastSM1,"./scripts/vintages/nowpastSM1IAE4.rds")
- saveRDS(nowpastSM2,"./scripts/vintages/nowpastSM2IAE4.rds")
- saveRDS(nowpastSM3,"./scripts/vintages/nowpastSM3IAE4.rds")
- saveRDS(nowpastSM4,"./scripts/vintages/nowpastSM4IAE4.rds")
- saveRDS(nowpastSM5,"./scripts/vintages/nowpastSM5IAE4.rds")
- saveRDS(nowpastSM6,"./scripts/vintages/nowpastSM6IAE4.rds")
- saveRDS(nowpastSM7,"./scripts/vintages/nowpastSM7IAE4.rds")
- saveRDS(nowpastSM8,"./scripts/vintages/nowpastSM8IAE4.rds")
- saveRDS(nowpastSM9,"./scripts/vintages/nowpastSM9IAE4.rds")
- saveRDS(nowpastSM10,"./scripts/vintages/nowpastSM10IAE4.rds")
- saveRDS(nowpastSM11,"./scripts/vintages/nowpastSM11IAE4.rds")
-
+nowpastSM1 <- readRDS("./scripts/vintages/nowpastSM1IAE4.rds")
+nowpastSM2 <- readRDS("./scripts/vintages/nowpastSM2IAE4.rds")
+nowpastSM3 <- readRDS("./scripts/vintages/nowpastSM3IAE4.rds")
+nowpastSM4 <- readRDS("./scripts/vintages/nowpastSM4IAE4.rds")
+nowpastSM5 <- readRDS("./scripts/vintages/nowpastSM5IAE4.rds")
+nowpastSM6 <- readRDS("./scripts/vintages/nowpastSM6IAE4.rds")
+nowpastSM7 <- readRDS("./scripts/vintages/nowpastSM7IAE4.rds")
+nowpastSM8 <- readRDS("./scripts/vintages/nowpastSM8IAE4.rds")
+nowpastSM9 <- readRDS("./scripts/vintages/nowpastSM9IAE4.rds")
 nowpastSM10 <- readRDS("./scripts/vintages/nowpastSM10IAE4.rds")
+nowpastSM11 <- readRDS("./scripts/vintages/nowpastSM11IAE4.rds")
+         
 
-           
+nowpast.plot(out = nowpastSM1, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+             yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.plot(out = nowpastSM2, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+             yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.plot(out = nowpastSM3, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+             yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.plot(out = nowpastSM4, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+             yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.plot(out = nowpastSM5, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+             yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.plot(out = nowpastSM6, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+             yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.plot(out = nowpastSM7, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+             yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.plot(out = nowpastSM8, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+             yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.plot(out = nowpastSM9, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+             yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.plot(out = nowpastSM10, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+             yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.plot(out = nowpastSM11, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+             yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+
+nowpast.error(out = nowpastSM1, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+              yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.error(out = nowpastSM2, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+              yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.error(out = nowpastSM3, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+              yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.error(out = nowpastSM4, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+              yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.error(out = nowpastSM5, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+              yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.error(out = nowpastSM6, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+              yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.error(out = nowpastSM7, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+              yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.error(out = nowpastSM8, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+              yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+error9 <-nowpast.error(out = nowpastSM9, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+              yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+error10 <- nowpast.error(out = nowpastSM10, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+              yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
+nowpast.error(out = nowpastSM11, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+              yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum)
 
 
+sqrt(mean(error9$nivel))
+sqrt(mean(error9$varQ))
+sqrt(mean(error9$varA))
+sqrt(mean(error9$acumAno))
 
+sqrt(mean(error10$nivel))
+sqrt(mean(error10$varQ))
+sqrt(mean(error10$varA))
+sqrt(mean(error10$acumAno))
 
-nowpastSM10$nivel
+nowpast.plot2(nowpastSM10, y = pibs[,"pib"], yAS = pibs[,"pibAS"], 
+              yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcum,
+              type = 2)
 
-colMeans(nowpast.error(out = nowpastSM10, y = pib, yAS = pibAS)$trimestral)
-mean(nowpast.error(out = nowpastSM10, y = pib, yAS = pibAS)$acumAno)
-nowpast.plot(nowpastSM10, y = pib, yAS = pibAS)
-nowpast.plot2(nowpastSM10, y = pib, yAS = pibAS, type = 1)
-nowpast.plot2(nowpastSM10, y = pib, yAS = pibAS, type = 2)
-nowpast.plot2(nowpastSM10, y = pib, yAS = pibAS, type = 3)
+# GRÁFICO DAS VARIAÇÕES --------------------------------
 
-
-
-# > colMeans(nowpast.error(out = nowpastSM10, y = pib, yAS = pibAS)$trimestral)
-# nivel     varQ     varA 
-# 3.323588 1.809466 2.096761 
-
-# MODELO SM10 GRÁFICOS SEPARADOS ---------------
-
-par(mfrow = c(1,3), mar = c(4,2,3,2))
+y = pibs[,"pib"]
+yAS = pibs[,"pibAS"]
+yVarA = pibs[,"pibVarA"]
+yVarQ = pibs[,"pibVarQ"]
+yAcumAno = pibAcumAno
 out <- nowpastSM10
-y <- pib
-yAS <- pibAS
-yVarQ <- pibVarQ2#(yAS/lag(yAS,-1)-1)*100
-yVarA <- pibVarA2#(y/lag(y,-4)-1)*100 
-ydata <- data.frame(y, ano = as.numeric(substr(as.Date(y),1,4)))
-ydata <- ydata[ydata$ano %in% as.numeric(names(table(ydata$ano)[table(ydata$ano) == 4])),]
-yMean <- aggregate(ydata$y, by = list(ydata$ano), FUN = mean, na.rm = F)
-yMean <- ts(yMean$x, start = yMean$Group.1[1], freq = 1)
-yVarAcum <- na.omit((yMean/lag(yMean,-1)-1)*100)
 
-nivel <- window(out$nivel, start = c(2015,1), freq = 4)
-varQ <- window(out$varQ, start = c(2015,1), freq = 4)
-varA <- window(out$varA, start = c(2015,1), freq = 4)
-acum4 <- window(out$acum4, start = c(2015,1), freq = 4)
+nivel <- out$nivel
+varQ <- out$varQ
+varA <- out$varA
+acum4 <- out$acum4
 
 y <- window(y, start = start(nivel), end = end(nivel), freq = 4)
 yVarQ <- window(yVarQ, start = start(nivel), end = end(nivel), freq = 4)
@@ -103,15 +150,7 @@ names <- gsub("-04","-Q2",names)
 names <- gsub("-07","-Q3",names)
 names <- gsub("-10","-Q4",names)
 
-# nível
-nivel0 <- data.frame(t(window(nivel, end = end(na.omit(y)), freq = 4)))
-a <- barplot(c(na.omit(y)), ylim = c(0,200), main = "Nível", border = "steelblue", col = "skyblue") #  names.arg = names,
-text(a,-8,  srt = 60, adj= 1, xpd = TRUE,
-     labels = names, cex=0.9)
-for(i in 1:ncol(nivel0)){
-  points(x = rep(a[i,1],sum(!is.na(nivel0[,i]))), y = nivel0[!is.na(nivel0[,i]),i], type = "l", col = "#CD0000")
-  points(x = a[i,1], y = nivel0[max(which(!is.na(nivel0[,i]))),i], pch = 19, col = "#CD0000")
-}
+par(mfrow = c(1,2), mar = c(4,3,3,3))
 
 # variação trimestral (trimestre imediatamente anterior)
 varQ0 <- data.frame(t(window(varQ, end = end(na.omit(y)), freq = 4)))
@@ -130,7 +169,7 @@ names <- gsub("-04","-Q2",names)
 names <- gsub("-07","-Q3",names)
 names <- gsub("-10","-Q4",names)
 
-varA0 <- data.frame(t(window(varA, start = start(yVarA), end = end(na.omit(yVarA)), freq = 4)))
+varA0 <- data.frame(t(window(varA, start = start(yVarA), end = end(na.omit(y)), freq = 4)))
 a <- barplot(c(na.omit(yVarA)), ylim = c(min(varA0, na.rm = T) -2, max(varA0, na.rm = T) + 2), main = "Variação Anual\n(trimestre do ano anterior)", border = "steelblue", col = "skyblue")
 text(a,-10,  srt = 60, adj= 1, xpd = TRUE, labels = names, cex=0.9)
 for(i in 1:ncol(varA0)){
@@ -138,21 +177,95 @@ for(i in 1:ncol(varA0)){
   points(x = a[i,1], y = varA0[max(which(!is.na(varA0[,i]))),i], pch = 19, col = "#CD0000")
 }
 
-# acumulado no ano
-# dataAcum <- table(substr(as.Date(acum4),1,4))
-# dataAcum <- as.numeric(names(dataAcum[dataAcum == 4]))
-# acum40 <- window(acum4, start = c(dataAcum[1],1), freq = 4)
+# GRÁFICO DO RMSE ------------------------------
 
-acum40 <- acum4[grepl("-10-",as.Date(acum4)),]
-namesAcum <- substr(as.Date(acum4)[grepl("-10-",as.Date(acum4))],1,4)
-yVarAcum <- window(yVarAcum, start = as.numeric(namesAcum[1]), freq = 1)
-namesAcum <- namesAcum[namesAcum %in% substr(as.Date(yVarAcum),1,4)]
+y = pibs[,"pib"]
+yAS = pibs[,"pibAS"]
+yVarA = pibs[,"pibVarA"]
+yVarQ = pibs[,"pibVarQ"]
+yAcumAno = pibAcumAno
+out <- nowpastSM10
 
-a <- barplot(c(yVarAcum), ylim = c(min(yVarAcum, na.rm = T) -2, max(yVarAcum, na.rm = T) + 2), 
-             main = "Crescimento anual\n(média do ano contra média do ano anterior)", names.arg = namesAcum,
-             border = "steelblue", col = "skyblue")
+nivel <- out$nivel
+varQ <- out$varQ
+varA <- out$varA
+acum4 <- out$acum4
 
-for(i in 1:length(namesAcum)){
-  points(x = rep(a[i,1],sum(!is.na(acum40[i,]))), y = acum40[i,!is.na(acum40[i,])], type = "l", col = "#CD0000")
-  points(x = a[i,1], y = acum40[i,max(which(!is.na(acum40[i,])))], pch = 19, col = "#CD0000")
+
+yOK <- window(y, start = start(nivel), freq = 4)#, end =  as.yearmon(tri)[length(tri)]
+yASOK <- window(yAS, start =  start(nivel), freq = 4)#, end =  as.yearmon(tri)[length(tri)], freq = 4)
+yVarAOK <- window(yVarA, start = start(nivel), freq = 4)#, end =  as.yearmon(tri)[length(tri)], freq = 4)
+yVarQOK <- window(yVarQ, start = start(nivel), freq = 4)#, end =  as.yearmon(tri)[length(tri)], freq = 4)
+
+datas_ano <- as.Date(gsub("-01-","-10-",as.Date(yAcumAno)))
+acum4OK <- acum4[as.Date(acum4) %in% datas_ano,]
+acum4OK <- ts(acum4OK, start = as.numeric(substr(as.Date(acum4)[as.Date(acum4) %in% datas_ano][1],1,4)), freq = 1)
+yAcumAnoOK <- window(yAcumAno, start = start(acum4OK), end = end(acum4OK), freq = 1)
+
+# diferença entre previsão e o valor do PIB
+difNivel <- (nivel - yOK)^2
+difVarQ <- (varQ - yVarQOK)^2
+difVarA <- (varA - yVarAOK)^2
+difAcum4 <- (acum4OK - yAcumAnoOK)^2
+
+difNivelOK <- matrix(NA, ncol = 39, nrow = nrow(difNivel))
+difVarQOK <- matrix(NA, ncol = 39, nrow = nrow(difNivel))
+difVarAOK <- matrix(NA, ncol = 39, nrow = nrow(difNivel))
+difAcumAnoOK <- matrix(NA, ncol = 39, nrow = nrow(difAcum4))
+
+for(i in 1:nrow(difNivel)){
+  pos_inicial <- min(which(!is.na(difNivel[i,])))
+  pos_final <- max(which(!is.na(difNivel[i,])))
+  n <- pos_inicial:pos_final
+  if(length(n) > 39){
+    n <- sort(seq(max(n), length.out = 39, by = -1))
+  }
+  if(length(n) < 39){
+    difNivelOK[i,] <- c(rep(NA, 39 - length(n)), difNivel[i,n])
+    difVarQOK[i,] <- c(rep(NA, 39 - length(n)), difVarQ[i,n])
+    difVarAOK[i,] <- c(rep(NA, 39 - length(n)), difVarA[i,n])
+  }else{
+    difNivelOK[i,] <- c(difNivel[i,n])
+    difVarQOK[i,] <- c(difVarQ[i,n])
+    difVarAOK[i,] <- c(difVarA[i,n])
+  }
 }
+
+for(i in 1:nrow(difAcum4)){
+  pos_inicial <- min(which(!is.na(difAcum4[i,])))
+  pos_final <- max(which(!is.na(difAcum4[i,])))
+  n <- pos_inicial:pos_final
+  if(length(n) > 39){
+    n <- sort(seq(max(n), length.out = 39, by = -1))
+  }
+  if(length(n) < 39){
+    difAcumAnoOK[i,] <- c(rep(NA, 39 - length(n)), difAcum4[i,n])
+  }else{
+    difAcumAnoOK[i,] <- c( difAcum4[i,n])
+  }
+}
+
+rmseNivel <- apply(difNivelOK, MARGIN = 2, FUN = function(x) sqrt(mean(x, na.rm = T)))
+rmseVarQ <- apply(difVarQOK, MARGIN = 2, FUN = function(x) sqrt(mean(x, na.rm = T)))
+rmseVarA <- apply(difVarAOK, MARGIN = 2, FUN = function(x) sqrt(mean(x, na.rm = T)))
+rmseAcum <- apply(difAcumAnoOK, MARGIN = 2, FUN = function(x) sqrt(mean(x, na.rm = T)))
+
+par(mfrow = c(1,2), mar = c(4,3,3,3))
+
+a <- barplot(rmseVarQ, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", main = "Variação Trimestral\n(trimestre imediatamente anterior)", cex.main =1.2, ylim = c(0,2))
+rect(a[32,1],0,a[39,1],2,col="#F0F8FF",lty=0)
+rect(a[20,1],0,a[31,1],2,col="#9BC4E2",lty=0)
+rect(a[1,1],0,a[19,1],2,col="#F0F8FF",lty=0)
+text(mean(a[9:10,1]),1.85, "Forecasting")
+text(mean(a[25:26,1]),1.85, "Nowcasting")
+text(mean(a[35:36,1]),1.85, "Backcasting")
+barplot(rmseVarQ, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", add = T, ylim = c(0,2))
+
+a <- barplot(rmseVarA, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", main = "Variação Anual\n(trimestre do ano anterior)", cex.main =1.2, ylim = c(0,4))
+rect(a[32,1],0,a[39,1],4,col="#F0F8FF",lty=0)
+rect(a[20,1],0,a[31,1],4,col="#A4D3EE",lty=0)
+rect(a[1,1],0,a[19,1],4,col="#F0F8FF",lty=0)
+text(mean(a[9:10,1]),3.75, "Forecasting")
+text(mean(a[25:26,1]),3.75, "Nowcasting")
+text(mean(a[35:36,1]),3.75, "Backcasting")
+barplot(rmseVarA, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", add = T, ylim = c(0,4))

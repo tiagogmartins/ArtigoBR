@@ -28,7 +28,7 @@ nowpastSM10 <- readRDS("./scripts/vintages/nowpastSM10IAE4.rds")
 nowpast.plot(nowpastSM10, y = pibs[,"pib"], yAS = pibs[,"pibAS"],
              yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcumAno)
 nowpast.plot2(nowpastSM10, y = pibs[,"pib"], yAS = pibs[,"pibAS"],
-             yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcumAno, type = 3)
+             yVarA = pibs[,"pibVarA"], yVarQ = pibs[,"pibVarQ"], yAcumAno = pibAcumAno, type = 2)
 
 
 colMeans(nowpast.error(out = nowpastSM10, y = pib, yAS = pibAS)$trimestral)

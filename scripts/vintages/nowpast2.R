@@ -284,38 +284,106 @@ nowpast.error <- function(out, y, yAS, yVarQ, yVarA, yAcumAno){
   varA <- out$varA
   acum4 <- out$acum4
   
-  apply(matrix(nivel), MARGIN = 2, FUN = function(x) rowSums(is.na(x)))
   
-  y <- window(y, start = start(nivel), end = end(nivel), freq = 4)
-  yVarQ <- window(yVarQ, start = start(nivel), end = end(nivel), freq = 4)
-  yVarA <- window(yVarA, start = start(nivel), end = end(nivel), freq = 4)
-  yAcumAno <- window(yAcumAno, start = start(nivel)[1], end = end(nivel)[1], freq = 1)
+  yOK <- window(y, start = start(nivel), freq = 4)#, end =  as.yearmon(tri)[length(tri)]
+  yASOK <- window(yAS, start =  start(nivel), freq = 4)#, end =  as.yearmon(tri)[length(tri)], freq = 4)
+  yVarAOK <- window(yVarA, start = start(nivel), freq = 4)#, end =  as.yearmon(tri)[length(tri)], freq = 4)
+  yVarQOK <- window(yVarQ, start = start(nivel), freq = 4)#, end =  as.yearmon(tri)[length(tri)], freq = 4)
   
-  rmse_nivel <- matrix(NA, nrow = length(y), ncol = 1)
-  rmse_varQ <- matrix(NA, nrow = length(y), ncol = 1)
-  rmse_varA <- matrix(NA, nrow = length(y), ncol = 1)
-  rmse_varAcum <- matrix(NA, nrow = length(yVarAcum), ncol = 1)
+  datas_ano <- as.Date(gsub("-01-","-10-",as.Date(yAcumAno)))
+  acum4OK <- acum4[as.Date(acum4) %in% datas_ano,]
+  acum4OK <- ts(acum4OK, start = as.numeric(substr(as.Date(acum4)[as.Date(acum4) %in% datas_ano][1],1,4)), freq = 1)
+  yAcumAnoOK <- window(yAcumAno, start = start(acum4OK), end = end(acum4OK), freq = 1)
   
-  for(i in 1:length(y)){
-    rmse_nivel[i,1] <- sqrt(mean((nivel[i,] - y[i])^2, na.rm = T))
-    rmse_varQ[i,1] <- sqrt(mean((varQ[i,] - yVarQ[i])^2, na.rm = T))
-    rmse_varA[i,1] <- sqrt(mean((varA[i,] - yVarA[i])^2, na.rm = T))
+  # diferença entre previsão e o valor do PIB
+  difNivel <- (nivel - yOK)^2
+  difVarQ <- (varQ - yVarQOK)^2
+  difVarA <- (varA - yVarAOK)^2
+  difAcum4 <- (acum4OK - yAcumAnoOK)^2
+  
+  difNivelOK <- matrix(NA, ncol = 39, nrow = nrow(difNivel))
+  difVarQOK <- matrix(NA, ncol = 39, nrow = nrow(difNivel))
+  difVarAOK <- matrix(NA, ncol = 39, nrow = nrow(difNivel))
+  difAcumAnoOK <- matrix(NA, ncol = 39, nrow = nrow(difAcum4))
+  
+  for(i in 1:nrow(difNivel)){
+    pos_inicial <- min(which(!is.na(difNivel[i,])))
+    pos_final <- max(which(!is.na(difNivel[i,])))
+    n <- pos_inicial:pos_final
+    if(length(n) > 39){
+      n <- sort(seq(max(n), length.out = 39, by = -1))
+    }
+    if(length(n) < 39){
+      difNivelOK[i,] <- c(rep(NA, 39 - length(n)), difNivel[i,n])
+      difVarQOK[i,] <- c(rep(NA, 39 - length(n)), difVarQ[i,n])
+      difVarAOK[i,] <- c(rep(NA, 39 - length(n)), difVarA[i,n])
+    }else{
+      difNivelOK[i,] <- c(difNivel[i,n])
+      difVarQOK[i,] <- c(difVarQ[i,n])
+      difVarAOK[i,] <- c(difVarA[i,n])
+    }
   }
   
-  acum40 <- acum4[grepl("-10-",as.Date(acum4)),]
-  for(i in 1:length(yVarAcum)){
-    rmse_varAcum[i,1] <- sqrt(mean((acum40[i,] - yVarAcum[i])^2, na.rm = T))
+  for(i in 1:nrow(difAcum4)){
+    pos_inicial <- min(which(!is.na(difAcum4[i,])))
+    pos_final <- max(which(!is.na(difAcum4[i,])))
+    n <- pos_inicial:pos_final
+    if(length(n) > 39){
+      n <- sort(seq(max(n), length.out = 39, by = -1))
+    }
+    if(length(n) < 39){
+      difAcumAnoOK[i,] <- c(rep(NA, 39 - length(n)), difAcum4[i,n])
+    }else{
+      difAcumAnoOK[i,] <- c( difAcum4[i,n])
+    }
   }
   
-  rmse_nivel <- ts(rmse_nivel, start = start(y), freq = 4)
-  rmse_varQ <- ts(rmse_varQ, start = start(y), freq = 4)
-  rmse_varA <- ts(rmse_varA, start = start(y), freq = 4)
-  rmse_varAcum <- ts(rmse_varAcum, start = start(yVarAcum), freq = 1)
+  rmseNivel <- apply(difNivelOK, MARGIN = 2, FUN = function(x) sqrt(mean(x, na.rm = T)))
+  rmseVarQ <- apply(difVarQOK, MARGIN = 2, FUN = function(x) sqrt(mean(x, na.rm = T)))
+  rmseVarA <- apply(difVarAOK, MARGIN = 2, FUN = function(x) sqrt(mean(x, na.rm = T)))
+  rmseAcum <- apply(difAcumAnoOK, MARGIN = 2, FUN = function(x) sqrt(mean(x, na.rm = T)))
+  
+  par(mfrow = c(2,2), mar = c(4,3,3,3))
+  
+  a <- barplot(rmseNivel, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", main = "Nível", ylim = c(0,7))
+  rect(a[32,1],0,a[39,1],7,col="#F0F8FF",lty=0)
+  rect(a[20,1],0,a[31,1],7,col="#9BC4E2",lty=0)
+  rect(a[1,1],0,a[19,1],7,col="#F0F8FF",lty=0)
+  text(mean(a[9:10,1]),6.5, "Forecasting")
+  text(mean(a[25:26,1]),6.5, "Nowcasting")
+  text(mean(a[35:36,1]),6.5, "Backcasting")
+  barplot(rmseNivel, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", main = "Nível", add = T, ylim = c(0,7))
+  
+  a <- barplot(rmseVarQ, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", main = "Variação Trimestral\n(trimestre imediatamente anterior)", ylim = c(0,2))
+  rect(a[32,1],0,a[39,1],2,col="#F0F8FF",lty=0)
+  rect(a[20,1],0,a[31,1],2,col="#9BC4E2",lty=0)
+  rect(a[1,1],0,a[19,1],2,col="#F0F8FF",lty=0)
+  text(mean(a[9:10,1]),1.85, "Forecasting")
+  text(mean(a[25:26,1]),1.85, "Nowcasting")
+  text(mean(a[35:36,1]),1.85, "Backcasting")
+  barplot(rmseVarQ, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", main = "Variação Trimestral\n(trimestre imediatamente anterior)", add = T, ylim = c(0,2))
+  
+  a <- barplot(rmseVarA, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", main = "Variação Anual\n(trimestre do ano anterior)", ylim = c(0,4))
+  rect(a[32,1],0,a[39,1],4,col="#F0F8FF",lty=0)
+  rect(a[20,1],0,a[31,1],4,col="#A4D3EE",lty=0)
+  rect(a[1,1],0,a[19,1],4,col="#F0F8FF",lty=0)
+  text(mean(a[9:10,1]),3.75, "Forecasting")
+  text(mean(a[25:26,1]),3.75, "Nowcasting")
+  text(mean(a[35:36,1]),3.75, "Backcasting")
+  barplot(rmseVarA, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", main = "Variação Anual\n(trimestre do ano anterior)", add = T, ylim = c(0,4))
+  
+  a <- barplot(rmseAcum, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", main = "Crescimento anual\n(média do ano contra média do ano anterior)", ylim = c(0,1.4))
+  rect(a[32,1],0,a[39,1],1.4,col="#F0F8FF",lty=0)
+  rect(a[20,1],0,a[31,1],1.4,col="#A4D3EE",lty=0)
+  rect(a[1,1],0,a[19,1],1.4,col="#F0F8FF",lty=0)
+  text(mean(a[9:10,1]),1.3, "Forecasting")
+  text(mean(a[25:26,1]),1.3, "Nowcasting")
+  text(mean(a[35:36,1]),1.3, "Backcasting")
+  barplot(rmseAcum, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", main = "Crescimento anual\n(média do ano contra média do ano anterior)", add = T, ylim = c(0,1.4))
   
   options(warn=0)
   
   # output
-  list(trimestral = na.omit(cbind(nivel = rmse_nivel, varQ = rmse_varQ, varA = rmse_varA)),
-       acumAno =  rmse_varAcum)
+  list(nivel = rmseNivel, varQ = rmseVarQ, varA = rmseVarA, acumAno = rmseAcum)
   
 }
