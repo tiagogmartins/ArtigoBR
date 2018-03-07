@@ -464,6 +464,21 @@ IES & IE-S with seasonal adjust - Service confidence index- Expectiation & 1 & 0
 
 \textcolor{red}{mostrar link do shiny com a atualização da previsão atual, realtime}
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1\textwidth]{fcst3anos_variacoes} % largura 13.11 altura 3.65
+  \caption{Previsão do PIB do Brasil de 2014-Q1 a 2017-Q4}
+  \label{fcst_variacoes}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1\textwidth]{rmse39_variacoes} % largura 13.11 altura 3.65
+  \caption{RMSE das previsões do PIB do Brasil durante 39 semanas antes de sua divulgação}
+  \label{rmse39}
+\end{figure}
+
+
 \section{Considerações finais}\label{conclusao}
 
 \textcolor{red}{concluir o trabalho e apresentar trabalhos futuros}
