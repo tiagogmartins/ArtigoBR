@@ -132,7 +132,7 @@ y = pibs[,"pib"]
 yAS = pibs[,"pibAS"]
 yVarA = pibs[,"pibVarA"]
 yVarQ = pibs[,"pibVarQ"]
-yAcumAno = pibAcumAno
+yAcumAno = pibAcum
 out <- nowpastSM10
 
 nivel <- out$nivel
@@ -155,10 +155,11 @@ par(mfrow = c(1,2), mar = c(4,3,3,3))
 # variação trimestral (trimestre imediatamente anterior)
 varQ0 <- data.frame(t(window(varQ, end = end(na.omit(y)), freq = 4)))
 a <- barplot(c(na.omit(yVarQ)), ylim = c(min(varQ0, na.rm = T) -2, max(varQ0, na.rm = T) + 2), main = "Variação Trimestral\n(trimestre imediatamente anterior)", border = "steelblue", col = "skyblue")
-text(a,min(varQ0, na.rm = T) -2,  srt = 60, adj= 1, xpd = TRUE,
+text(a,min(varQ0, na.rm = T) -1,  srt = 60, adj= 1, xpd = TRUE,
      labels = names, cex=0.9)
 for(i in 1:ncol(varQ0)){
-  points(x = rep(a[i,1],sum(!is.na(varQ0[,i]))), y = varQ0[!is.na(varQ0[,i]),i], type = "l", col = "#CD0000")
+  if(sum(!is.na(varQ0[,i])) > 28){ n <- 28}else{n <- sum(!is.na(varQ0[,i]))}
+  points(x = rep(a[i,1],n), y = tail(varQ0[!is.na(varQ0[,i]),i],28), type = "l", col = "#CD0000")
   points(x = a[i,1], y = varQ0[max(which(!is.na(varQ0[,i]))),i], pch = 19, col = "#CD0000")
 }
 
@@ -173,10 +174,10 @@ varA0 <- data.frame(t(window(varA, start = start(yVarA), end = end(na.omit(y)), 
 a <- barplot(c(na.omit(yVarA)), ylim = c(min(varA0, na.rm = T) -2, max(varA0, na.rm = T) + 2), main = "Variação Anual\n(trimestre do ano anterior)", border = "steelblue", col = "skyblue")
 text(a,-10,  srt = 60, adj= 1, xpd = TRUE, labels = names, cex=0.9)
 for(i in 1:ncol(varA0)){
-  points(x = rep(a[i,1],sum(!is.na(varA0[,i]))), y = varA0[!is.na(varA0[,i]),i], type = "l", col = "#CD0000")
+  if(sum(!is.na(varA0[,i])) > 28){ n <- 28}else{n <- sum(!is.na(varA0[,i]))}
+  points(x = rep(a[i,1],n), y = tail(varA0[!is.na(varA0[,i]),i],28), type = "l", col = "#CD0000")
   points(x = a[i,1], y = varA0[max(which(!is.na(varA0[,i]))),i], pch = 19, col = "#CD0000")
 }
-
 # GRÁFICO DO RMSE ------------------------------
 
 y = pibs[,"pib"]
@@ -252,20 +253,65 @@ rmseAcum <- apply(difAcumAnoOK, MARGIN = 2, FUN = function(x) sqrt(mean(x, na.rm
 
 par(mfrow = c(1,2), mar = c(4,3,3,3))
 
-a <- barplot(rmseVarQ, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", main = "Variação Trimestral\n(trimestre imediatamente anterior)", cex.main =1.2, ylim = c(0,2))
-rect(a[32,1],0,a[39,1],2,col="#F0F8FF",lty=0)
-rect(a[20,1],0,a[31,1],2,col="#9BC4E2",lty=0)
-rect(a[1,1],0,a[19,1],2,col="#F0F8FF",lty=0)
-text(mean(a[9:10,1]),1.85, "Forecasting")
-text(mean(a[25:26,1]),1.85, "Nowcasting")
-text(mean(a[35:36,1]),1.85, "Backcasting")
-barplot(rmseVarQ, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", add = T, ylim = c(0,2))
+a <- barplot(tail(rmseVarQ,28), names.arg = -28:(-1), border = "#A52A2A", col = "#EEB4B4", main = "Variação Trimestral\n(trimestre imediatamente anterior)", cex.main =1.2, ylim = c(0,2))
+rect(a[21,1],0,a[28,1],2,col="#F0F8FF",lty=0)
+rect(a[9,1],0,a[20,1],2,col="#9BC4E2",lty=0)
+rect(a[1,1],0,a[8,1],2,col="#F0F8FF",lty=0)
+text(mean(a[4:5,1]),1.85, "Forecasting")
+text(mean(a[14:15,1]),1.85, "Nowcasting")
+text(mean(a[24:25,1]),1.85, "Backcasting")
+barplot(tail(rmseVarQ,28), names.arg = -28:(-1), border = "#A52A2A", col = "#EEB4B4", add = T, ylim = c(0,2))
 
-a <- barplot(rmseVarA, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", main = "Variação Anual\n(trimestre do ano anterior)", cex.main =1.2, ylim = c(0,4))
-rect(a[32,1],0,a[39,1],4,col="#F0F8FF",lty=0)
-rect(a[20,1],0,a[31,1],4,col="#A4D3EE",lty=0)
-rect(a[1,1],0,a[19,1],4,col="#F0F8FF",lty=0)
-text(mean(a[9:10,1]),3.75, "Forecasting")
-text(mean(a[25:26,1]),3.75, "Nowcasting")
-text(mean(a[35:36,1]),3.75, "Backcasting")
-barplot(rmseVarA, names.arg = -39:(-1), border = "#A52A2A", col = "#EEB4B4", add = T, ylim = c(0,4))
+a <- barplot(tail(rmseVarA,28), names.arg = -28:(-1), border = "#A52A2A", col = "#EEB4B4", main = "Variação Anual\n(trimestre do ano anterior)", cex.main =1.2, ylim = c(0,3))
+rect(a[21,1],0,a[28,1],3,col="#F0F8FF",lty=0)
+rect(a[9,1],0,a[20,1],3,col="#A4D3EE",lty=0)
+rect(a[1,1],0,a[8,1],3,col="#F0F8FF",lty=0)
+text(mean(a[4:5,1]),2.75, "Forecasting")
+text(mean(a[14:15,1]),2.75, "Nowcasting")
+text(mean(a[24:25,1]),2.75, "Backcasting")
+barplot(tail(rmseVarA,28), names.arg = -28:(-1), border = "#A52A2A", col = "#EEB4B4", add = T, ylim = c(0,4))
+
+
+# GRÁFICO DENTRO DE CADA TRISMESTRE --------------------------
+
+y = pibs[,"pib"]
+yAS = pibs[,"pibAS"]
+yVarA = pibs[,"pibVarA"]
+yVarQ = pibs[,"pibVarQ"]
+yAcumAno = pibAcumAno
+out <- nowpastSM10
+
+nivel <- out$nivel
+varQ <- out$varQ
+varA <- out$varA
+acum4 <- out$acum4
+
+y <- window(y, start = start(nivel), end = end(nivel), freq = 4)
+yVarQ <- window(yVarQ, start = start(nivel), end = end(nivel), freq = 4)
+yVarA <- window(yVarA, start = start(nivel), end = end(nivel), freq = 4)
+
+names <- substr(as.Date(na.omit(y)),1,7)
+names <- gsub("-01","-Q1",names)
+names <- gsub("-04","-Q2",names)
+names <- gsub("-07","-Q3",names)
+names <- gsub("-10","-Q4",names)
+
+par(mar = c(3,3,3,2), mfrow = c(2,2))
+  
+nivel0 <- data.frame(t(window(nivel, end = end(na.omit(y)), freq = 4)))
+colnames(nivel0) <- as.Date(window(nivel, end = end(na.omit(y)), freq = 4))
+  
+titulos <- substr(colnames(nivel0),1,7)
+titulos <- gsub("-01","-Q1",titulos)
+titulos <- gsub("-04","-Q2",titulos)
+titulos <- gsub("-07","-Q3",titulos)
+titulos <- gsub("-10","-Q4",titulos)
+  
+for(i in c(11,12,13,14)){
+  plot(y = tail(nivel0[!is.na(nivel0[,i]),i],28), x = 1:28, type = "o", xaxt = "n", 
+       ylim = c(min(c(y[i],nivel0[,i]), na.rm = T)-2, max(c(y[i],nivel0[,i]), na.rm = T)),
+       col = "steelblue", lwd = 2, main = paste0(titulos[i],"\nNível"), ylab = "")
+  abline(h = y[i], lty = 3, col = "#CD0000")
+  axis(1, labels = tail(rownames(nivel0)[!is.na(nivel0[,i])],28), at = 1:28)
+}
+  
