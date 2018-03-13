@@ -14,6 +14,7 @@
 \usepackage{longtable}
 \usepackage{pdflscape}
 \usepackage{booktabs}
+\usepackage{float}
 % espaçamento duplo
 \usepackage{setspace}
 \onehalfspace 
@@ -85,15 +86,19 @@ Palavras-chave: nowcasting, PIB, dynamic factors model.
 
 \section{Introdução}\label{intro}
 
-Decisões de política monetária e investimento são tomadas com base nas condições presentes e futuras da economia mesmo quando as variáveis usadas para descrever esse estado não estão acessíveis.Esse é particularmente o caso do PIB do Brasil que é divulgado, em média, 60 dias após o trimestre de referência. Por conta disso, a previsão em tempo real, ou simplesmente \textit{nowcasting}, se torna um tema de relevância.
+Decisões de política monetária e investimento são tomadas com base nas condições presentes e futuras da economia mesmo quando as variáveis usadas para descrever esse estado não estão acessíveis. Esse é particularmente o caso do PIB do Brasil que é divulgado, em média, 60 dias após o trimestre de referência. Por conta disso, a previsão em tempo real, ou simplesmente \textit{nowcasting}, se torna um tema de relevância.
 
-Os métodos de previsão em tempo real, que se desenvolveram nas últimas décadas, são baseados em modelos de fatores dinâmicos (DFM) e dependem de algum poder computacional para lidar com uma grande quantidade de dados. Veja \cite{stockwatson2006} para uma revisão a respeito dessa literatura.
 
-O termo nowcasting é cunhado em \cite{giannoneetal2008} e definido como a previsão do presente, do passado recente ou do futuro próximo. Neste artigo, os autores mostram como reduzir em apenas dois fatores dinâmicos a informação contida em dezenas de séries temporais mensais com o intuito de explicar o PIB (dos Estados Unidos) de curto prazo dos trimestres cuja informação ainda não está disponível. Após esse estudo, muitos outros continuaram explorando o uso de DFM na previsão em tempo real, como por exemplo \cite{banburarunstler2011} e \cite{banburaetal2011}. No primeiro os autores fazem uma análise mostrando como a divulgação de certas variáveis influenciam na atualização da previsão do PIB. Além disso, os autores também propõem uma medida mensal para a variável trimestral, uma vez que os fatores extraídos são mensais. No segundo, os autores propõem estimar o modelo via outro método (Expectation Maximization) e não mais por dois estágios como se fazia em \cite{giannoneetal2008}.
 
-O objetivo do artigo é encontrar um modelo de previsão para o PIB do Brasil segundo as propostas desenvolvidas nos artigos do parágrafo anterior. Para disseminar o uso da metodologia e reproduzir esse trabalho, desenvolveu-se o pacote \texttt{nowcasting} no \textsf{R} com tais métodos e algumas outras ferramentas que facilitam o tratamento de séries temporais para tal uso e que permitem analisar a importância de cada variável numa previsão. As funções de estimação foram apenas traduzidas para a linguagem, uma vez que \cite{giannoneetal2008} e \cite{banburaetal2011} forneceram os códigos em \textsf{Matlab}.
 
-A estrutura do artigo é a seguinte: na seção \ref{metodo} são apresentados o arcabouço teórico sobre modelos de fatores dinâmicos, os métodos de estimação e a base de dados; na seção \ref{nowcastingBR} tem-se os resultados da aplicação metodológica, a análise dos resultados e previsão extendida para o PIB do Brasil no ano de 2018. Por fim, na seção \ref{conclusao}, têm-se as considerações finais. Embora todo o contexto apresentado aqui seja referente ao PIB, a metodologia pode ser aplicada a outras séries temporais.
+O termo \textit{nowcasting} é cunhado em \cite{giannoneetal2008} e definido como a previsão do
+presente, do passado recente ou do futuro próximo. Duas outras terminologias também são utilizadas e ajudam a complementar a definição de previsões ao longo do tempo. A terminologia \textit{nowcasting} refere-se à previsão da variável durante o seu período de realização. A terminologia \textit{backcasting} refere-se à previsao da variável após o seu período de realização, porém esta ainda não foi observada/divulgada. E, por fim, a terminologia \textit{forecasting} refere-se à previsao da variável antes do seu período de realização. Para tornar mais claro o entendimento, suponha que se deseja obter a previsão do PIB para o 2º trimestre de 2017. Se o período corrente é uma data contida no 2º trimestre de 2017, então a previsão é classificada como nowcasting. No entanto, se a data atual é anterior ao 2º trimestre de 2017, diz-se forecasting. E por último, se a data atual é posterior ao 2º trimestre de 2017 e o PIB ainda não foi divulgado, então faz-se backcasting.
+
+Os métodos de previsão em tempo real, que se desenvolveram nas últimas décadas, são baseados em modelos de fatores dinâmicos (DFM) e dependem de algum poder computacional para lidar com uma grande quantidade de dados. Veja \cite{stockwatson2006} para uma revisão a respeito dessa literatura. No artigo \cite{giannoneetal2008}, os autores mostram como reduzir em apenas dois fatores dinâmicos a informação contida em dezenas de séries temporais mensais com o intuito de explicar o PIB (dos Estados Unidos) de curto prazo dos trimestres cuja informação ainda não está disponível. Após esse estudo, muitos outros continuaram explorando o uso de DFM na previsão em tempo real, como por exemplo \cite{banburarunstler2011} e \cite{banburaetal2011}. No primeiro os autores fazem uma análise mostrando como a divulgação de certas variáveis influenciam na atualização da previsão do PIB. Além disso, os autores também propõem uma medida mensal para a variável trimestral, uma vez que os fatores extraídos são mensais. No segundo, os autores propõem estimar o modelo via outro método (Expectation-Maximization) e não mais por dois estágios como se fazia em \cite{giannoneetal2008}.
+
+Nesse artigo tem-se o objetivo de encontrar um modelo de previsão para o PIB do Brasil segundo as propostas desenvolvidas nos artigos do parágrafo anterior. Para disseminar o uso da metodologia e reproduzir esse trabalho, desenvolveu-se o pacote \texttt{nowcasting} no \textsf{R} com tais métodos e algumas outras ferramentas que facilitam o tratamento de séries temporais para tal uso e que permitem analisar a importância de cada variável numa previsão. As funções de estimação foram apenas traduzidas para a linguagem, uma vez que \cite{giannoneetal2008} e \cite{banburaetal2011} forneceram os códigos em \textsf{Matlab}.
+
+A estrutura do artigo é a seguinte: na seção \ref{metodo} é apresentadado brevemente o arcabouço teórico sobre modelos de fatores dinâmicos e também a base de dados; na seção \ref{nowcastingBR} tem-se os resultados da aplicação metodológica e a análise dos resultados. Por fim, na seção \ref{conclusao}, têm-se as considerações finais. Embora todo o contexto apresentado aqui seja referente ao PIB, a metodologia pode ser aplicada a outras séries temporais.
 
 \section{Metodologia}\label{metodo}
 
@@ -106,7 +111,7 @@ x_t   &= \mu + \Lambda f_t + \varepsilon_t \label{eq_xt} \\
 f_{t} &= \sum_{i=1}^{p} A_i f_{t-i} + B u_t, \quad u_t \sim NID(0,I_q) \label{eq_ft}
 \end{align}
 
-em que $\mu$ é o vetor de médias incondicionais, $f_t$ é o vetor de fatores comuns (não observados) de dimensão $r \times 1$ modelados por um processo VAR(p) em que as matrizes $A_i$ de dimensão $r \times r$ representam os coeficientes do processo autorregressivo e B de dimensão $r \times q$, $\Lambda$ é uma matriz de constantes de dimensão $N \times r$ e $\varepsilon_t$ é um vetor de componentes idiossincráticos, tal que $\Psi = E[\varepsilon_{t} \varepsilon^{'}_{t}]$. Assume-se ainda que $E[\varepsilon_t u_{t-k}'] = 0$ para qualquer $k$. %, que pode seguir um processo AR(q):
+em que $\mu$ é o vetor de médias incondicionais, $f_t$ é o vetor de fatores comuns (não observados) de dimensão $r \times 1$ modelados por um processo VAR(p) em que as matrizes $A_i$ de dimensão $r \times r$ representam os coeficientes do processo autorregressivo, B é uma matriz de coeficientes de dimensão $r \times q$, $\Lambda$ é uma matriz de constantes de dimensão $N \times r$ e $\varepsilon_t$ é um vetor de componentes idiossincráticos, tal que $\Psi = E[\varepsilon_{t} \varepsilon^{'}_{t}]$. Assume-se ainda que $E[\varepsilon_t u_{t-k}'] = 0$ para qualquer $k$. %, que pode seguir um processo AR(q):
 
 No chamado \textit{modelo de fatores dinâmicos exato} assume-se que os componentes de erro são mutualmente não correlacionados em todos os lags, isto é, $E[\varepsilon_{i,t} \varepsilon_{j,s}] = 0$ para $i \neq j$. No entanto, é possível que a componente idiossincrática siga um processo AR(p) tal como se mostra na equação (\ref{eq_arq}). Tal procedimento é encontrado com mais detalhes em \cite{banburaetal2011}.
 
@@ -187,7 +192,7 @@ Defina $y_t = Y_t^M - Y_{t-1}^M$ e $y_t^Q = Y_t^Q - Y_{t-3}^Q$. Desse modo pode-
 y_t^Q = y_t + 2y_{t-1} + 3y_{t-2} + 2y_{t-3} + y_{t-4}, \quad  t = 3,6,9,...
 \end{equation}
 
-Assim é possível transformar diferenças mensais em diferenças trimestrais. Além disso, se a variável de interesse for uma taxa de variação, tal filtro é uma possível aproximação:
+Assim é possível transformar diferenças mensais em diferenças trimestrais. Além disso, se a variável de interesse for uma taxa de variação, é válida a aproximação a seguir:
 
 \begin{equation}
 log(y_t^Q) \approx log(y_t) + 2log(y_{t-1}) + 3log(y_{t-2}) + 2log(y_{t-3}) + log(y_{t-4})
@@ -195,12 +200,9 @@ log(y_t^Q) \approx log(y_t) + 2log(y_{t-1}) + 3log(y_{t-2}) + 2log(y_{t-3}) + lo
 
 \subsection{Estimação}\label{estima}
 
-Serão descritas duas metodologias para estimação de fatores dinâmicos: \textit{Two Stages} e \textit{Expectation \& Maximization}. No primeiro método considera-se que as variáveis explicativas em $x_t$ sejam de mesma periodicidade (mensal) e a variável resposta de periodicidade trimestral. No segundo método, $x_t$ e $y_t$ são de periodicidade mensal.
+O método de estimação utilizado nesse paper é definido como \textit{Two Stages}, em que as variáveis explicativas em $x_t$ são de mesma periodicidade (mensal) e a variável resposta de periodicidade trimestral. Essa abordagem é apresentada no trabalho seminal de \cite{giannoneetal2008}. 
 
-\begin{enumerate}
-\item \textit{Two Stages}: Essa abordagem é apresentada no trabalho seminal de \cite{giannoneetal2008}. Considerando o modelo de fatores dinâmicos exato, a estimação dos fatores dinâmicos é feita em duas etapas.
-
-No primeiro estágio, utilizando um painel ($\bar{X}_t$) balanceado e padronizado, são estimados os parâmetros das matrizes $\Lambda$ e $f_t$ via PCA (Principal Components Analysis). Por balanceado entende-se as variáveis em $x_t$ sem missings e outliers. A padronização é importante pois a estimação via PCA não é invariante a escala. Os estimadores $\hat\Lambda$ e $\hat{f}_t$ podem ser obtidos resolvendo o problema de otimização em (\ref{otimiza_ft}).
+Considerando o modelo de fatores dinâmicos exato, a estimação dos fatores dinâmicos é feita em duas etapas. No primeiro estágio, utilizando um painel ($\bar{X}_t$) balanceado e padronizado, são estimados os parâmetros das matrizes $\Lambda$ e $f_t$ via PCA (Principal Components Analysis). Por balanceado entende-se as variáveis em $x_t$ sem missings e outliers. A padronização é importante pois a estimação via PCA não é invariante a escala. Os estimadores $\hat\Lambda$ e $\hat{f}_t$ podem ser obtidos resolvendo o problema de otimização em (\ref{otimiza_ft}).
 
 \begin{equation}\label{otimiza_ft}
 \min_{f_1,...,f_T,\Lambda} \frac{1}{NT} \sum_{t=1}^T (\bar{X}_t -\Lambda f_t)'(\bar{X}_t -\Lambda f_t) \quad s.t. \quad N^{-1} \Lambda'\Lambda = I_r
@@ -212,20 +214,15 @@ Em seguida, o estimador da matriz de variância e covariância de $\varepsilon_t
 \hat{\Psi} = diag\Bigg(\frac{1}{T} \sum_{t=1}^T (\bar{X}_t -\hat{\Lambda} \hat{f}_t)(\bar{X}_t -\hat{\Lambda} \hat{f}_t)'\Bigg)
 \end{equation}
 
-De acordo com \cite{stockwatson2011}, a solução de (\ref{otimiza_ft}) é tal que $\hat{\Lambda}$ são os autovetores da matriz de variância e covariância de $\bar{X}_t$ associados aos $r$ maiores autovalores e $\hat{f_t}$ são as $r$ primeiras componentes principais de $\bar{X}_t$. Os coeficientes das matrizes $A_i$, $i = 1,2,...,p$ são estimados por OLS ao regredir $f_t$ em $f_{t-1},...,f_{t-p}$. Por fim $BB'$ é estimado como sendo a matriz de covariância dos resíduos dessa regressão.
+De acordo com \cite{stockwatson2011}, a solução de (\ref{otimiza_ft}) é tal que $\hat{\Lambda}$ são os autovetores da matriz de variância e covariância de $\bar{X}_t$ associados aos $r$ maiores autovalores e $\hat{f_t}$ são as $r$ primeiras componentes principais de $\bar{X}_t$. Os coeficientes das matrizes $A_i$, $i = 1,2,...,p$, são estimados por OLS ao regredir $f_t$ em $f_{t-1},...,f_{t-p}$. Por fim $BB'$ é estimado como sendo a matriz de covariância dos resíduos dessa regressão.
 
-No segundo estágio, utiliza-se Kalman smoothing para reestimar os fatores para o painel não balanceado $x_t$ considerando os parâmetros obtidos na etapa anterior.
-
-Nesse contexto, duas opções podem ser consideradas ao estimar os fatores:
+No segundo estágio, utiliza-se \textit{Kalman smoothing} para reestimar os fatores para o painel não balanceado $x_t$ considerando os parâmetros obtidos na etapa anterior. Nesse contexto, duas opções podem ser consideradas ao estimar os fatores:
 
 \begin{itemize}
 \item \textit{quarterly factors}: as variáveis explicativas mensais podem ser transformadas para representarem quantidades trimestrais seguindo o procedimento visto na seção \ref{variaveisQM}. Portanto, os fatores embora mensais também representarão quantidades trimestrais e, consequentemente, poderão ser transformados em variáveis de periodicidade trimestral, e assim a equação (\ref{reg}) pode ser estimada para a previsão da variável resposta.
 
 \item \textit{monthly factors}: outra opção é estimar os fatores sobre as variáveis originais e ao final aplicar a transformação vista na seção \ref{variaveisQM} aos fatores para que representem quantidades trimestrais. Em seguida cria-se a variável de periodicidade trimestral que será usada para a previsão da variável resposta em (\ref{reg}).
 \end{itemize}
-
-
-
 
 \begin{equation}\label{reg}
 y_t = \beta_0 + \beta' \hat{f}_t  + e_t
@@ -237,84 +234,81 @@ Os parâmetros da equação (\ref{reg}) são estimados por OLS e a previsão de 
 \hat{y}_{t+h} = \hat{\beta_0} + \hat{\beta}' \hat{f}_{t+h}
 \end{equation}
 
-\item Expectation \& Maximization: \cite{banburaetal2011} apresentam novidades metodológicas, tanto na especificação do modelo quanto na estimação.
 
-Primeiramente são impostas restrições com relação aos fatores. Os fatores são divididos em três grupos: global, real e nominal, de modo que a equação (\ref{eq_xt}) pode ser reescrita como:
-
-\begin{equation}
-x_t = \mu + \begin{pmatrix}
-  \Lambda_{N,G} & \Lambda_{N,N}  & 0\\
-  \Lambda_{R,G} & 0  & \Lambda_{R,R}
-\end{pmatrix}
-\begin{pmatrix}
-  f_t^G \\
-  f_t^N \\
-  f_t^R
-\end{pmatrix} + \varepsilon_t\\
-\end{equation}
-
-em que
-
-\begin{equation}
-\Lambda = \begin{pmatrix}
-  \Lambda_{N,G} & \Lambda_{N,N}  & 0\\
-  \Lambda_{R,G} & 0  & \Lambda_{R,R}
-\end{pmatrix}\\
-\end{equation}
-
-\begin{equation}
-f_t = \begin{pmatrix}
-  f_t^G \\
-  f_t^N \\
-  f_t^R
-\end{pmatrix}\\
-\end{equation}
-
-
-O fator global é estimado considerando todas as variáveis explicativas. Já os fatores nominal e real são estimados considerando apenas, respectivamente, as variáveis classificadas em nominais e reais. O parâmetro $\mu$ é um vetor de dimensão N de constantes.
-
-\cite{banburaetal2011} utilizam uma especificação diferente para o DFM que não é na forma exata, permitindo autocorrelação serial nos componentes idiossincráticos, no qual cada um segue isoladamente um $AR(1)$:
-
-\begin{equation}
-\varepsilon_{i,t} = \alpha_i \epsilon_{i,t-1} + e_{i,t}, \quad e_{i,t} \sim i.i.d. N(0,\sigma_i^2)
-\end{equation}
-com $E[e_{i,t} e_{j,s}] = 0$ para $i \neq j$.
-
-Uma outra novidade no modelo é que o vetor de séries $x_t$ é composto por variáveis mensais e por uma medida mensal não observada do PIB. O que torna obsoleta a necessidade da equação (\ref{reg}) uma vez que séries de diferentes frequências são incorparadas conjuntamente no processo gerador.
-
-Neste modelo os parâmetros, os fatores comuns e o PIB mensal não são observados, porém todos são estimados conjuntamente utilizando o \emph{Expected Maximization algorithm}. Esse algoritmo utiliza a seguinte estrutura recursiva:
-
-\begin{itemize}
-\item E-step: A esperança da função de verossimilhança condicional é calculada utilizando as estimativas dos parâmetros estáticos ($\theta$) da iteração anterior, $\theta_j$;
-\item M-step: Os novos parâmetros, $\theta_{j+1}$ são estimados pela maximização da função de verossimilhança do passo anterior, com respeito a $\theta$.
-\end{itemize}
-
-O algoritmo então converge até que os parâmetros sejam iguais nas iterações. O processo recursivo se inicia com as estimativas de PCA apresentadas em \cite{giannoneetal2008} (primeiro estágio do método \textit{Two Stages}).
-
-\end{enumerate}
 
 \subsection{Base de dados}\label{base}
 
-% Please add the following required packages to your document preamble:
+As variáveis explicativas utilizadas na previsão do PIB do Brasil foram selecionadas com base nas opiniões de especialistas em previsões do PIB do Brasil e nos trabalhos desenvolvidos em \cite{giannoneetal2008} e em \cite{banburaetal2011}. Ao todo tem-se 130 variáveis e estas são apresentadas na Tabela \ref{tab:long} (Apêndice). Nessa tabela também mostra-se qual transformação aplicou-se a cada variável a fim de torná-las estacionárias. As tranformações são: 0: a série observada é preservada; 1: taxa de crescimento mensal; 2: diferença mensal; 3: diferença da taxa de crescimento interanual; 4: diferença da diferença anual. Além disso, mostra-se também o tempo em dias que cada variável demora para ser divulgada (\textit{delay}). Essa última informação é útil para a estimação das previsões para um período passado, permitindo a criação da base de dados supostamente observada em uma data específica.
+
+A variável resposta que se deseja prever é o PIB do Brasil. A variável trimestral foi coletada sem ajuste sazonal e a transformação para estacionarizá-la é a 3 (diferença da taxa de crescimento interanual). Embora a variável prevista seja o nível, é de interesse dos analistas a previsão da variável em taxa de variação trimestral (contra o trimestre imediatamente anterior) e também em taxa de variação anual (contra o mesmo trimestre do ano anterior). Para obter a taxa de variação trimestral é necessário primeiramente remover a sazonalidade da variável em nível. O ajuste sazonal então foi realizado utilizando o software X-13ARIMA-SEATS seguindo a metodologia do IBGE\footnote{\url{ftp://ftp.ibge.gov.br/Contas_Nacionais/Contas_Nacionais_Trimestrais/Ajuste_Sazonal/X13_NasContasTrimestrais.pdf}}.  
+
+
+\section{Real time do PIB brasileiro}\label{nowcastingBR}
+
+Os resultados a seguir mostram o desempenho do modelo final seguindo a metodologia de fatores dinâmicos apresentada na seção \ref{metodo}. Para definir o modelo e alcançar um resultado desejável com um baixo erro de previsão, fez-se diferentes combinações com as diferentes quantidades \textit{r} de fatores dinâmicos, a ordem \textit{p} de defasagem dos fatores, o número \textit{q} de choques nos fatores e as duas opções de estimação para os fatores. A combinação escolhida foi a de p = 2, q = 2 e r = 2 com o método de estimação \textit{monthly factors} utilizando todas as variáveis descritas na Tabela \ref{tab:long} vista no apêndice.
+
+As previsões que serão apresentadas ocorreram a cada sexta-feira de 7 de novembro de 2014 a 31 de dezembro de 2017  para o primeiro trimestre de 2015 até o quarto trimestre de 2017. Pode ser visto na tabela de erro de previsão Figura \ref{rmse39} que a cada semana que passa o erro de previsão diminui e percebe-se que quando estão prevendo o PIB do período que está dentro da amostra (nowcasting) vê-se que o erro cai ainda mais e fica próximo à 0.7.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{rmse_nowcasting} % largura 13.11 altura 3.65
+  \caption{RMSE das previsões do PIB do Brasil durante 39 semanas antes de sua divulgação}
+  \label{rmse39}
+\end{figure}
+
+Como pode-se observar na figura \ref{Comparacao} vê-se que o erro de previsão é grande quando faltam 2 meses para começar o trimestre que está sendo previsto, porém com a divulgação de cada vez mais variáveis a cada semana percebe-se que quando se passa 1 mês dessa previsão ocorre um grande salto e o erro de previsão cai bruscamente. Como foi ressaltado no parágrafo anterior tem-se que o erro diminui mais a medida que se aproxima do começo do trimestre avaliado. 
+
+Na figura \ref{Comparacao} vê-se a comparação do modelo em questão contra a previsão do boletim Focus, pode-se ver que o erro de previsão deles é muito pequeno comparado ao do modelo, porém quando entra no trimestre em questão, o erro se aproxima muito do erro do boletim Focus, visto que a PIB divulgado pelo IBGE seria a linha pontilhada como ressaltado na legenda da Figura \ref{Comparacao.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{ComparacaoFocusModelo} %largura 13.11 altura 3.65
+  \caption{Comparação entre o nosso modelo e o Focus}
+  \label{Comparacao}
+\end{figure}
+
+A figura \ref{fcst_variacoes} mostra o resultado do modelo prevendo o pib a cada trimestre (ponto vermelho), a variação da previsão até chegar na previsão final (linha vermelha) e o PIB que foi divulgado pelo IBGE (coluna azul).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{fcst3anos_variacoes} % largura 13.11 altura 3.65
+  \caption{Previsão do PIB do Brasil de 2014-Q1 a 2017-Q4}
+  \label{fcst_variacoes}
+\end{figure}
+
+
+\textcolor{red}{mostrar link do shiny com a atualização da previsão atual, realtime}
+
+
+\section{Considerações finais}\label{conclusao}
+
+\textcolor{red}{concluir o trabalho e apresentar trabalhos futuros}
+
+\bibliographystyle{apa-good}
+\bibliography{refs}
+
+
 
 \begin{landscape}
+\section*{Apêndice}
+
 \begin{center}
 \begin{longtable}{|l|l|l|l|}
 
-\caption{Data base.}\label{tab:long} \\
+\caption{Variáveis explicativas}\label{tab:long} \\
 
 \hline \multicolumn{1}{|c|}{\textbf{Series code}} & \multicolumn{1}{c|}{\textbf{Series name}} & \multicolumn{1}{c|}{\textbf{Transformation}} & \multicolumn{1}{c|}{\textbf{Delay}} \\ \hline
 \endfirsthead
 
 \multicolumn{3}{c}%
-{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+{{\bfseries \tablename\ \thetable{} -- continuação da página anterior}} \\
  % <<<<<<< HEAD
 \hline \multicolumn{1}{|c|}{\textbf{Series code}} & \multicolumn{1}{c|}{\textbf{Series name}} & \multicolumn{1}{c|}{\textbf{Transformation}} & \multicolumn{1}{c|}{\textbf{Delay}} \\ \hline
  % =======
 % >>>>>>> e8977d353c1435645224b462bf46129a5e4e5501
 \endhead
 
-\hline \multicolumn{3}{|r|}{{Continued on next page}} \\ \hline
+\hline %\multicolumn{3}{|r|}{{Continued on next page}} \\ \hline
 \endfoot
 
 \hline \hline
@@ -425,8 +419,6 @@ serie21930 & Industrial Production (2012=100)- Northern Region & 3 & 35 \\
 serie21934 & Industrial Production (2012=100)- South & 3 & 35 \\
 serie21939 & Industrial Production (2012=100)- Central- Western Region & 3 & 35 \\
 serie21961 & Industrial Production (2012=100)- Northeast & 3 & 35 \\
-serie22099 & Quaterly GDP- observed data- GDP at market prices & 3 & 70 \\
-serie22109 & Quaterly GDP - seasonally adjusted data - GDP at market prices & 1 & 70 \\
 serie22704 & Balance on goods and services - monthly - net & 3 & 21 \\
 serie22705 & Balance on goods and services - monthly - credit & 3 & 21 \\
 serie22706 & Balance on goods and services - monthly - debit & 3 & 21 \\
@@ -447,43 +439,16 @@ IECOM & IE-COM with seasonal adjust-Retail sector extended expected index & 1 & 
 ICS & ICS with seasonal adjust - Service confidence index & 1 & 0 \\
 ISAS & ISA-S with seasonal adjust - Service confidence index- Actual situation & 1 & 0 \\
 IES & IE-S with seasonal adjust - Service confidence index- Expectiation & 1 & 0 \\
+IAEAGRO & Economy agriculture activities & 3 & 8 \\
+IAEIND & Economy industrial activities & 3 & 8 \\
+IAESERV & Economy services activities & 3 & 8 \\
+IAEIMP & Economy taxes activities & 3 & 8 \\
+IAE & Economy activities & 3 & 8 \\
+
+
 
 \end{longtable}
 \end{center}
 \end{landscape}
 
-
-\section{Nowcasting do PIB brasileiro}\label{nowcastingBR}
-
-\textcolor{red}{apresentar a ordem de cada modelo e quais variáveis}
-
-\textcolor{red}{análise pseudo fora da amostra para avaliar a previsão do PIB}
-
-\textcolor{red}{avaliar como a divulgação das variáveis impactam na previsão do PIB}
-
-\textcolor{red}{previsão do PIB 2018}
-
-\textcolor{red}{mostrar link do shiny com a atualização da previsão atual, realtime}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=1\textwidth]{fcst3anos_variacoes} % largura 13.11 altura 3.65
-  \caption{Previsão do PIB do Brasil de 2014-Q1 a 2017-Q4}
-  \label{fcst_variacoes}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=1\textwidth]{rmse39_variacoes} % largura 13.11 altura 3.65
-  \caption{RMSE das previsões do PIB do Brasil durante 39 semanas antes de sua divulgação}
-  \label{rmse39}
-\end{figure}
-
-
-\section{Considerações finais}\label{conclusao}
-
-\textcolor{red}{concluir o trabalho e apresentar trabalhos futuros}
-
-\bibliographystyle{apa-good}
-\bibliography{refs}
 \end{document}
